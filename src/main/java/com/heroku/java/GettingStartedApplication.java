@@ -21,7 +21,7 @@ public class GettingStartedApplication {
         this.dataSource = dataSource;
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String index() {
         return "index";
     }
@@ -34,6 +34,10 @@ public class GettingStartedApplication {
     @GetMapping("/signUp")
     public String signUp() {
         return "signUp";
+    }
+    @GetMapping("/aboutus")
+    public String Aboutus() {
+        return "aboutus";
     }
 
     @GetMapping("/database")
