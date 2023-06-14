@@ -41,7 +41,7 @@ public class UsersController {
 
       connection.close();
 
-      return "redirect:/";
+      return "redirect:/login";
     }
     catch (SQLException sqe) {
       System.out.println("Error Code = " + sqe.getErrorCode());
