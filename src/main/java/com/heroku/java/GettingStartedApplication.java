@@ -27,6 +27,11 @@ public class GettingStartedApplication {
         this.dataSource = dataSource;
     }
 
+    @GetMapping("/aboutus") 
+    public String aboutus(){
+        return "aboutus";
+    }
+    
     @GetMapping("/home")
     public String index() {
         return "index";
