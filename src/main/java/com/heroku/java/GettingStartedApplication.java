@@ -26,6 +26,13 @@ public class GettingStartedApplication {
     public GettingStartedApplication(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @GetMapping("/homestay")
+    public String homestay(){
+        return "homestay";
+    }
 
     @GetMapping("/")
     public String index() {
@@ -35,33 +42,36 @@ public class GettingStartedApplication {
     public String login(){
         return "login";
     }
+      @GetMapping("/about")
+    public String about(){
+        return "about";
+    }
     @PostMapping("/login")
     String homepage(HttpSession session, @ModelAttribute("user") Users user, Model model){
         try (Connection connection = dataSource.getConnection()) {
             final var statement = connection.createStatement();
-            final var resultSet = statement.executeQuery("SELECT userID, name, password,email,address FROM user");
+            final var resultSet = statement.executeQuery("SELECT userId, username, password,email,address FROM user");
             String returnPage = "";
+
             while (resultSet.next()) {
-                String username = resultSet.getString("name");
-                String pwd = resultSet.getString("password");
                 String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
-                int userID = resultSet.getInt("userID");
-                
-                if (username.equals(user.getEmail()) && bCryptPasswordEncoder().matches(user.getPassword(), pwd)) {
-        
-                  session.setAttribute("name", user.getName());
-                  session.setAttribute("email", email);
-                  session.setAttribute("userID", userID);
-                  returnPage = "redirect:/";
-                  break;
-                }else{
-                    returnPage = "index";
+                String pwd = resultSet.getString("password");
+                if (user.getEmail() != "" && user.getPassword() !="") {
+                    if (email.equals(user.getEmail()) && bCryptPasswordEncoder().matches(user.getPassword(), pwd)) {
+            
+                    session.setAttribute("email", user.getEmail()); 
+                    returnPage = "redirect:/dashboard";
+                    break;
+                    }else{
+                        returnPage = "index";
+                    }
                 }
+                    
             }
-            return "/"; 
+            connection.close();
+            return returnPage;
     }catch (Throwable t) {
-        System.out.println("message : " + t.getMessage());
+        System.out.println("Error occured : " + t.getMessage());
         return "index";
       }
     }

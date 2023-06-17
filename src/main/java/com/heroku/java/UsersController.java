@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UsersController {
-  private DataSource dataSource;
+  private  DataSource dataSource;
 
   @Autowired
   public void AccountController(DataSource dataSource) {
@@ -38,10 +38,9 @@ public class UsersController {
       statement.setString(4, Users.getAddress());
 
       statement.executeUpdate();
-
       connection.close();
 
-      return "redirect:/";
+      return "redirect:/login";
     }
     catch (SQLException sqe) {
       System.out.println("Error Code = " + sqe.getErrorCode());
