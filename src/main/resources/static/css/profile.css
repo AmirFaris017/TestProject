@@ -36,3 +36,11 @@ body {
     
   }  
 
+.box{
+    border-radius: 25px;
+    
+}
+
+.field{
+    border-radius: 15px;
+}

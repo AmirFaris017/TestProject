@@ -36,15 +36,15 @@ body {
     
   }  
 button {   
-        background-color: #4CAF50;   
-        width: 30%;  
-        color: black;   
-        padding: 15px;   
-        margin: 10px 0px;   
-        border-radius: 35px;
-        cursor: pointer;   
-        margin-left: 200px;
-        }   
+  background-color: #4CAF50;   
+  width: 30%;  
+  color: black;   
+  padding: 15px;   
+  margin: 10px 0px;   
+  border-radius: 35px;
+  cursor: pointer;   
+  margin-left: 200px;
+}   
 
 input[type=text], input[type=password]{   
         width: 70%;   
@@ -96,4 +96,11 @@ body {
   background-attachment: fixed;
   background-image: url;
   background-size: cover;
+}
+
+.scheduler-border{
+  width: inherit !important;
+  padding: 0 10px !important;
+  border-bottom: none !important;
+  border: 5px solid rgb(0,0,0,0.3) !important;
 }
