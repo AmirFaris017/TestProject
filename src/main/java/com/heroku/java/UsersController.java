@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,7 +51,7 @@ public class UsersController {
       return "redirect:/";
     } catch (Exception e) {
       System.out.println("E message : " + e.getMessage());
-      return "redirect:/";
+      return "redirect:/homestay";
     }
 
     }

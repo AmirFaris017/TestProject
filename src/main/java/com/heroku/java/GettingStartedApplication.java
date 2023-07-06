@@ -26,17 +26,11 @@ public class GettingStartedApplication {
     public GettingStartedApplication(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @GetMapping("/homestay")
     public String homestay(){
         return "homestay";
-    }
-
-    @GetMapping("/aboutus") 
-    public String aboutus(){
-        return "aboutus";
     }
     
     @GetMapping("/home")

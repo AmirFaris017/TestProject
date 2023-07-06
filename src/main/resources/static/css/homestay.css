@@ -35,4 +35,14 @@ body {
     padding: 10px;
     
   }  
-
+/*image*/
+  .A{
+    float: left;
+    margin-left: 125px;
+    margin-top: 20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: blue;
+  }
