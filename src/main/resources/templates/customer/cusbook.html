@@ -18,7 +18,7 @@
         <a th:href="@{/cusabout}">About us</a>
         <a class="active" th:href="@{/cusbook}">Booking</a>
         <div class="topnav-right" style="display: flex;">
-            <a th:href="@{/customerDetails}"><img src="image/user-profile.png" alt="" width="30px"></a>
+            <a th:href="@{/customerdetails}"><img src="image/user-profile.png" alt="" width="30px"></a>
         </div>
       </div>
 
@@ -26,20 +26,24 @@
         <div class="d-flex justify-content-center mt-4">
             <p class="text-center mt-0" style="background-color:rgb(196, 196, 196) ;border-radius: 10px; width: 15%; height: 30px;  " >Choose Your Homestay</p>
           </div>
-        <div class="row justify-content-evenly container-fluid" style="margin-left: 140px;">
-            <div class="col-3">
-                <p>Homestay A</p>
-                <a class="text-center" style="border-radius: 10px; background-color: grey; text-decoration: none; width:max-content; color: black;">View </a>
+        <div class="row justify-content-center container-fluid" >
+            <div class="row justify-content-evenly container-fluid">
+                <div class="col-3">
+                    <img src="image/homestayA.jpeg"  class="rounded" alt="..." style="width:200px;height: 250px;">
+                    <p>Homestay A</p>
+                    <a th:href=@{/homestayA} class="text-center" style="border-radius: 10px; background-color: grey; text-decoration: none; width:max-content; color: black;">View </a>
+                </div>
+                <div class="col-3">
+                    <img src="image/homestayB.jpeg" class="rounded" alt="..." style=" width: 200px; height: 250px;">
+                    <p>Homestay B</p>
+                    <a th:href="@{/homestayB}" class="text-center" style="border-radius: 10px; background-color: grey; text-decoration: none; color: black;">View </a>
+                </div>
+                <div class="col-3">
+                    <img src="image/homestayC.jpeg" class="rounded" alt="..." style="width: 200px;height: 250px;">
+                    <p>Homestay C</p>
+                    <a th:href="@{/homestayC}" class="text-center" style="border-radius: 10px; background-color: grey; text-decoration: none; color: black;">View </a>
+                </div>
             </div>
-            <div class="col-3">
-                <p>Homestay B</p>
-                <a class="text-center" style="border-radius: 10px; background-color: grey; text-decoration: none; color: black;">View </a>
-            </div>
-            <div class="col-3">
-                <p>Homestay C</p>
-                <a class="text-center" style="border-radius: 10px; background-color: grey; text-decoration: none; color: black;">View </a>
-            </div>
-        </div>
       </main>
 </body>
 </html>

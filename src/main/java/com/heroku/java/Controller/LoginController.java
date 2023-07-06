@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.heroku.java.Model.Admin;
 import com.heroku.java.Model.Users;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,7 +54,7 @@ public class LoginController {
     //   }
 
     @PostMapping("/login")
-    String homepage(HttpSession session, @ModelAttribute("user") Users user,
+    String homepage(HttpSession session, @ModelAttribute("login") Users user,Admin admin,
         @RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
       System.out.println("Login Error PAram : " + loginError);
       try (Connection connection = dataSource.getConnection()) {

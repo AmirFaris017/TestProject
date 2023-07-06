@@ -102,6 +102,21 @@ public class GettingStartedApplication {
         return "admin/addhomestay";
     }
 
+    @GetMapping("homestayA")
+    public String homestayA(){
+        return "customer/homestayA";
+    }
+
+    @GetMapping("homestayB")
+    public String homestayB(){
+        return "customer/homestayB";
+    }
+
+    @GetMapping("homestayC")
+    public String homestayC(){
+        return "customer/homestayC";
+    }
+
     @GetMapping("/database")
     String database(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {

@@ -37,7 +37,7 @@ public class HomestayController {
             statement.setString(2, homestay.getHomestayLocation());
             statement.setDouble(3, homestay.getHomestayPrice());
             statement.setString(4, homestay.getHomestayPic());
-
+            
             statement.executeUpdate();
             connection.close();
 
