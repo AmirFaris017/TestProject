@@ -15,12 +15,24 @@
             <img src=""   alt="" />
         </a>
         <a th:href="@{/}">Homestay Semujuk</a>
-        <a class="active" th:href="@{/}">Home</a>
-        <a th:href="@{/}">About us</a>
-        <a th:href="@{/}">Booking</a>
-        <div class="topnav-right">
-            <a th:href="@{/}"><img src="image/user-profile.png" alt=""></a>
+        <a class="active" th:href="@{/cusdashboard}">Home</a>
+        <a th:href="@{/cusabout}">About us</a>
+        <a th:href="@{/cusbook}">Booking</a>
+        <div class="topnav-right" style="display: flex;">
+            <a th:href="@{/customerdetails}"><img src="image/user-profile.png" alt="" width="30px"></a>
         </div>
       </div>
+      <main style="background-image: url(image/hometay-background.jpeg); background-position: center; background-size: cover; display: flex; flex-direction: column; height: 92vh;">
+        <div class="d-flex justify-content-center ">
+            <h1 class="text-center " style="color: white; margin-top: 325px;">Homestay Semujuk</h1>
+        </div>
+        <div class= "d-flex justify-content-center">
+            <p class="text-center " style="color: white; margin-bottom: 100px; width: 70%; font-size: 26px;">Welcome to Homestay Semujuk page! We offer unique and authentic accommodation with local hosts. Book now for an unforgettable experience!</p>
+            
+        </div>
+        <!-- <div class="d-flex justify-content-center">
+            <p><a th:href="@{/homestay}" style="padding: 0px;">View More</a></p>
+        </div> -->
+    </main>
 </body>
 </html>

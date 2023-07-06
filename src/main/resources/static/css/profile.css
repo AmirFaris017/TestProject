@@ -36,8 +36,11 @@ body {
     
   }  
 
-button{
-  background-color: blue;
-  
+.box{
+    border-radius: 25px;
+    
+}
 
+.field{
+    border-radius: 15px;
 }

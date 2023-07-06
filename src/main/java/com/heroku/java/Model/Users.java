@@ -1,18 +1,26 @@
-package com.heroku.java;
+package com.heroku.java.Model;
 
 public class Users {
-
-    private String name;
+    private String username;
     private String password;
     private String email;
     private String address;
   
-    public String getName() {
-      return name;
+    
+
+    public Users(String username, String password, String email, String address) {
+      this.username = username;
+      this.password = password;
+      this.email = email;
+      this.address = address;
+    }
+
+    public String getUsername() { 
+      return username;
     }
   
     public void setUsername(String name) {
-      this.name = name;
+      this.username = name;
     }
   
     public String getPassword() {
@@ -38,5 +46,6 @@ public class Users {
     public void setAddress(String address){
       this.address = address;
     }
+    
     
   }
