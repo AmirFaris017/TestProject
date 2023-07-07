@@ -12,15 +12,15 @@
         </a>
         <a th:href="@{/}">Homestay Semujuk</a>
         <a  th:href="@{/}">Home</a>
-        <a th:href="@{/}">About us</a>
-        <a th:href="@{/}">Booking</a>
+        <a th:href="@{/about}">About us</a>
+        <a th:href="@{/homestay}">Booking</a>
         <div class="topnav-right">
             <a class="active" th:href="@{/login}">Login</a>
             <a  th:href="@{/signUp}">Sign Up</a>
         </div>
       </div>
     <center> <h1> Log in </h1> </center>   
-    <form action="index.php" method="post">  
+    <form th:action="@{/login}" method="post" modelAttribute="user" th:object="${user}">  
         <div class="container">   
             <label class="form">Email Address : </label>   
             <input type="text" placeholder="Enter Email" name="email" required>  <br>
@@ -29,7 +29,7 @@
             <br>
             <input type="radio" class="role" name="role" placeholder="Admin">Admin
             <input type="radio" class="role" name="role" placeholder="Customer">Customer
-            <button type="submit">Sign in</button>  <br> 
+            <button type="submit">Sign in</button>  <br>    
         </div>   
     </form>     
 </body>     

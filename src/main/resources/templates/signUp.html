@@ -35,7 +35,7 @@
         </div>
       </div>
     <center> <h1> Create new account </h1> </center>   
-    <form action="#" method="post">  
+    <form th:action="@{/registerAcc}" method="post"th:object="${register}" modelAttribute="register" >  
         <div class="container">   
             <label>Username : </label>   
             <input type="text" placeholder="Enter Username" name="username" required>  
@@ -44,7 +44,7 @@
             <label>Password : </label>   
             <input type="password" placeholder="Enter Password" name="password" required>  
             <label>Adress : </label>   
-            <input type="text" placeholder="Enter Address" name="adress" required>  
+            <input type="text" placeholder="Enter Address" name="address" required>  
             <a href="@{/login}"><button type="submit">Sign up</button></a>  <br> 
             <input type="checkbox" checked="checked"> Remember me  <br> 
             <a th:href="@{/login}">Already have an account</a>
