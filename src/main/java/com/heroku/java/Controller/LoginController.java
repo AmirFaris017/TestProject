@@ -67,9 +67,7 @@ public class LoginController {
         while (resultSet.next()) {
           String pwd = resultSet.getString("password");
           String email = resultSet.getString("email");
-          String name = resultSet.getString("username");
-          String address = resultSet.getString("address");
-          int userId = resultSet.getInt("usersid");
+          int userId = resultSet.getInt("userid");
 
           System.out.println(pwd + email + userId);
 

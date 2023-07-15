@@ -27,17 +27,17 @@
     <p style="font-weight: bold; font-size: 35px;">Account Details</p>
 </div>
 <div class="d-flex justify-content-center box " style="background-color:#cfcaca;margin: 0 20%;" >
-    <form th:action="@{/updateprofile}" method="post" modelAttribute="customerdetails" th:object="${customerdetails}" style="width: 65%;">
+    <form th:action="@{/updateprofile}" method="post" modelAttribute="customerdetails" th:object="${customerdetails}" style="width: 75%;">
         <legend class="scheduler-border">Personal Information</legend>
-        <fieldset class="scheduler-border field" style="background-color: #fefefe;">
+        <fieldset class="scheduler-border field">
             <label for="name">Name:</label>
-            <input class="form-control" type="text" id="name" name="username" placeholder="Name" th:value="${customerdetails.username}"><br><br>
+            <input class="form-control f " type="text" id="name" name="username" placeholder="Name" th:value="${customerdetails.username}" ><br><br>
             <label for="email">Email Address:</label>
-            <input class="form-control" type="text" id="email" name="email" placeholder="Email Address" th:value="${customerdetails.email}"><br><br>
+            <input class="form-control f " type="text" id="email" name="email" placeholder="Email Address" th:value="${customerdetails.email}"><br><br>
             <label for="password">Password:</label>
-            <input class="form-control" type="password" id="password" name="password" placeholder="Password" th:value="${customerdetails.password}"><br><br>
+            <input class="form-control f " type="password" id="password" name="password" placeholder="Password" th:value="${customerdetails.password}"><br><br>
             <label for="address">Address:</label>
-            <input class="form-control" type="text" id="address" name="address" placeholder="Address" th:value="${customerdetails.address}"><br><br>
+            <input class="form-control f " type="text" id="address" name="address" placeholder="Address" th:value="${customerdetails.address}"><br><br>
         </fieldset>
         <div class="d-flex justify-content-evenly">
             <div class="justify-content-center">

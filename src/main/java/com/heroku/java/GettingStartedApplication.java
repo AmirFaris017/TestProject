@@ -87,10 +87,6 @@ public class GettingStartedApplication {
         return "customer/cusbook";
     }
 
-    @GetMapping("adminbook")
-    public String adminbook(){
-        return "admin/adminbook";
-    }
 
     @GetMapping("adminabout")
     public String adminabout(){
@@ -116,6 +112,13 @@ public class GettingStartedApplication {
     public String homestayC(){
         return "customer/homestayC";
     }
+
+    @GetMapping("payment")
+    public String payment(){
+        return "customer/payment";
+    }
+
+    
 
     @GetMapping("/database")
     String database(Map<String, Object> model) {

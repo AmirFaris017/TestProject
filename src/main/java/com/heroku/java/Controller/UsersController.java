@@ -35,12 +35,13 @@ public class UsersController {
     public String registerAcc(HttpSession session, @ModelAttribute("register") Users user, Model model) {
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "INSERT INTO users_ds(username, email, password, address) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO users_ds(username, email, password, address,phoneno) VALUES (?,?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getEmail());
             statement.setString(3, passwordEncoder.encode(user.getPassword()));
             statement.setString(4, user.getAddress());
+            statement.setString(5, user.getPhoneNo());
 
             statement.executeUpdate();
             connection.close();
@@ -70,7 +71,7 @@ public class UsersController {
 
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.usersid = ?";
+            String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.userid = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userid);
             System.out.println("int : " + userid);
@@ -84,7 +85,7 @@ public class UsersController {
                 String address = resultSet.getString("address");
                 System.out.println("fullname from db: " + username);
 
-                Users customerdetails = new Users(username, password, email, address);
+                Users customerdetails = new Users( username, password, email, address);
                 // usr.add(customerdetails);
                 model.addAttribute("customerdetails", customerdetails);
                 System.out.println("fullname " + customerdetails.getUsername());

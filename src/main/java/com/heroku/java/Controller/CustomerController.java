@@ -13,17 +13,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.heroku.java.Model.Admin;
-import com.heroku.java.Model.Homestay;
 import com.heroku.java.Model.Users;
 
 import jakarta.servlet.http.HttpSession;
 
-public class AdminController {
-     private DataSource dataSource;
-
+public class CustomerController {
+    private DataSource dataSource;
+    
     @Autowired
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -32,52 +30,39 @@ public class AdminController {
      @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-     @PostMapping("/login")
-     String homepage(HttpSession session, @ModelAttribute("user") Users user,
-        @RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
-      System.out.println("Login Error PAram : " + loginError);
-      try (Connection connection = dataSource.getConnection()) {
-        final var statement = connection.createStatement();
-  
-        final var resultSet = statement.executeQuery("SELECT * FROM admin;");
-        
-        String returnPage = "";
-  
-        while (resultSet.next()) {
-          String pwd = resultSet.getString("password");
-          String email = resultSet.getString("email");
-          String name = resultSet.getString("username");
-          String address = resultSet.getString("address");
-          int userId = resultSet.getInt("usersid");
 
-          System.out.println(pwd + email + userId);
+    @PostMapping("/registerAcc")
+    public String registerAcc(HttpSession session, @ModelAttribute("register") Users user) {
+        try {
+            Connection connection = dataSource.getConnection();
+            String sql1 = "INSERT INTO users_ds(username, email, password, address) VALUES (?,?,?,?)";
+            PreparedStatement statement1 = connection.prepareStatement(sql1);
+            statement1.setString(1, user.getUsername());
+            statement1.setString(2, user.getEmail());
+            statement1.setString(3, passwordEncoder.encode(user.getPassword()));
+            statement1.setString(4, user.getAddress());
+            statement1.setString(5, user.getPhoneNo());
 
-          if (user.getUsername() != "" && user.getPassword() != "") {
-            if (email.equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), pwd)) {
-  
-              session.setAttribute("username", user.getUsername());
-              session.setAttribute("userId", userId);
-              session.setMaxInactiveInterval(1440 * 60);
-              System.out.println("user id : " + session.getAttribute("userId"));
-              returnPage = "redirect:/admindashboard";
-              break;
-            } else {
-              returnPage = "redirect:/login?error=true";
-            }
-  
-          } else {
-            returnPage = "redirect:/login?error=true";
-  
-          }
+            statement1.executeUpdate();
+            connection.close();
+
+            
+
+
+            return "redirect:/login";
+        } catch (SQLException sqe) {
+            System.out.println("Error Code = " + sqe.getErrorCode());
+            System.out.println("SQL state = " + sqe.getSQLState());
+            System.out.println("Message = " + sqe.getMessage());
+            System.out.println("printTrace /n");
+            sqe.printStackTrace();
+
+            return "redirect:/";
+        } catch (Exception e) {
+            System.out.println("E message : " + e.getMessage());
+            return "redirect:/";
         }
-        connection.close();
-        return returnPage;
-  
-      } catch (Throwable t) {
-        System.out.println("message : " + t.getMessage());
-        return "index";
-      }
-}
+    }
     @GetMapping("/customerdetails")
     public String viewProfile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
        
@@ -100,18 +85,17 @@ public class AdminController {
                 String password = resultSet.getString("password");
                 String email = resultSet.getString("email");
                 String address = resultSet.getString("address");
-                
                 System.out.println("fullname from db: " + username);
 
-                Users customerdetails = new Users(username, password, email, address);
+                Users customerdetails = new Users( username, password, email, address);
                 // usr.add(customerdetails);
                 model.addAttribute("customerdetails", customerdetails);
                 System.out.println("fullname " + customerdetails.getUsername());
                 // Return the view name for displaying customer details --debug
-                System.out.println("Session admindetails : " + model.getAttribute("customerdetails"));
+                System.out.println("Session customerdetails : " + model.getAttribute("customerdetails"));
             }
             // model.addAttribute("users_db", usr);
-            return "customer/admindetails";
+            return "customer/customerdetails";
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,7 +103,4 @@ public class AdminController {
         
         return "login";
     }
-
-    
-
 }

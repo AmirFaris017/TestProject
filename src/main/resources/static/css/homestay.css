@@ -41,3 +41,11 @@ button{
   
 
 }
+
+.box{
+  border-radius: 20px;
+}
+
+h4{
+  font-weight: bold;
+}

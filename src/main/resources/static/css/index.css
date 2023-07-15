@@ -66,6 +66,7 @@ button:hover {
 
 .container {   
   padding: 25px;   
+  border-radius: 15px;
   background-color: grey;
   width: 50%;  
   align-items: center;
