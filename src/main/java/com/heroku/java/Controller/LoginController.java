@@ -74,7 +74,7 @@ public class LoginController {
           if (user.getUsername() != "" && user.getPassword() != "") {
             if (email.equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), pwd)) {
   
-              session.setAttribute("username", user.getUsername());
+              session.setAttribute("email", user.getEmail());
               session.setAttribute("userId", userId);
               session.setMaxInactiveInterval(1440 * 60);
               System.out.println("user id : " + session.getAttribute("userId"));

@@ -89,35 +89,115 @@ public class HomestayController {
             return "redirect:/";
         }
     } 
+    @GetMapping("/cusbook")
+    public String customerhomestay(HttpSession session, Model model) {
+        ArrayList<Homestay> homestays = new ArrayList<>();
+        try (Connection con = dataSource.getConnection()) {
+            final var statement = con.prepareStatement("SELECT * FROM homestay_ds");
+            final var rs = statement.executeQuery();
+            while (rs.next()) {
+                int homestayid = rs.getInt("homestayid");
+                String homestayname = rs.getString("homestayname");
+                String homestaylocation = rs.getString("homestaylocation");
+                Double homestayprice = rs.getDouble("homestayprice");
+                String homestaydetails = rs.getString("homestaydetails");
+                byte[] homestaypic = rs.getBytes("homestaypic");
+                String base64Image = Base64.getEncoder().encodeToString(homestaypic);
+                String imageSrc = "data:image/jpeg;base64," + base64Image;
 
-  @GetMapping("/viewhomestay")
-  public String viewhomestaydetail (@RequestParam("homestayid") int homestayid, Model model){
-    try{
-        Connection connection = dataSource.getConnection();
-        String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
-        final var statement = connection.prepareStatement(sql);
-        statement.setInt(1, homestayid);
-        final var resultSet = statement.executeQuery();
+                Homestay homestay = new Homestay(homestayid, homestayname, homestaylocation, homestayprice, null, homestaydetails, imageSrc);
+                homestays.add(homestay);
+            }
+            model.addAttribute("homestays", homestays);
+            return "customer/cusbook";
+        } catch (SQLException sqe) {
+            System.out.println("Error Code = " + sqe.getErrorCode());
+            System.out.println("SQL state = " + sqe.getSQLState());
+            System.out.println("Message = " + sqe.getMessage());
+            System.out.println("printTrace /n");
+            sqe.printStackTrace();
 
-        if(resultSet.next()){
-            String homestayname = resultSet.getString("homestayname");
-            String homestaylocation = resultSet.getString("homestaylocation");
-            Double homestayprice = resultSet.getDouble("homestayprice");
-            String homestaydetails = resultSet.getString("homestaydetails");
-            byte[] homestaybytes = resultSet.getBytes("homestaypic");
-            String base64Image = Base64.getEncoder().encodeToString(homestaybytes);
-            String imageSrc = "data:image/jpeg;base64," + base64Image;
+            return "redirect:/";
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("E message : " + e.getMessage());
 
-            Homestay homestay = new Homestay(homestayid, homestayname, homestaylocation, homestayprice, null, homestaydetails, imageSrc);
-            model.addAttribute("homestay", homestay);
-            
+            return "redirect:/";
         }
-        return "admin/viewhomestay";
-    }catch(Throwable t){
-        System.out.println("Error: " + t.getMessage());
-        return "index";
+    } 
+
+    @GetMapping("/viewhomestay")
+    public String viewhomestaydetail (@RequestParam("homestayid") int homestayid, Model model){
+        try{
+            Connection connection = dataSource.getConnection();
+            String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
+            final var statement = connection.prepareStatement(sql);
+            statement.setInt(1, homestayid);
+            final var resultSet = statement.executeQuery();
+    
+            if(resultSet.next()){
+                String homestayname = resultSet.getString("homestayname");
+                String homestaylocation = resultSet.getString("homestaylocation");
+                Double homestayprice = resultSet.getDouble("homestayprice");
+                String homestaydetails = resultSet.getString("homestaydetails");
+                byte[] homestaybytes = resultSet.getBytes("homestaypic");
+                String base64Image = Base64.getEncoder().encodeToString(homestaybytes);
+                String imageSrc = "data:image/jpeg;base64," + base64Image;
+    
+                Homestay homestay = new Homestay(homestayid, homestayname, homestaylocation, homestayprice, null, homestaydetails, imageSrc);
+                model.addAttribute("homestay", homestay);
+                
+            }
+            return "admin/viewhomestay";
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.out.println("Error: " + t.getMessage());
+            return "index";
+        }
     }
 
+    @PostMapping("/updatehomestay/{homestayid}")
+    public String updatehomestay(HttpSession session,@ModelAttribute("homestay") Homestay homestay,Model model,@PathVariable("homestayid") int homestayid) {
+    String homestayname = homestay.getHomestayname();
+    String homestaylocation = homestay.getHomestaylocation();
+    Double homestayprice = homestay.getHomestayprice();
+    String homestaydetails = homestay.getHomestaydetails();
+    
+    try {
+        Connection con = dataSource.getConnection();
+        String sql = "UPDATE homestay_ds SET homestayname=?,homestaylocation=?,homestayprice=?,homestaydetails=? WHERE homestayid=?";
+        final var statement = con.prepareStatement(sql);
 
-  }
+        statement.setString(1, homestayname);
+        statement.setString(2, homestaylocation);
+        statement.setDouble(3, homestayprice);
+        statement.setString(4, homestaydetails);
+        statement.setInt(5, homestayid);
+
+        statement.executeUpdate();
+        statement.close();
+        con.close();
+
+        return "redirect:/viewhomestay?homestayid=" + homestayid;
+    } catch (Throwable t) {
+        t.printStackTrace();
+        System.out.println("Error: " + t.getMessage());
+        return "redirect:/login";
+    }
+}
+    @GetMapping("/deletehomestay")
+    public String deletehomestay(@RequestParam("homestayid") int homestayid) {
+    try (Connection connection = dataSource.getConnection()) {
+        String sql = "DELETE FROM homestay_ds WHERE homestayid = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, homestayid);
+        statement.executeUpdate();
+        return "redirect:/adminbook";
+    } catch (Throwable t) {
+        System.out.println("message: " + t.getMessage());
+        return "redirect:/login";
+    }
+    }
+
+    
 }
