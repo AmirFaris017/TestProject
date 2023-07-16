@@ -52,9 +52,8 @@ public class LoginController {
     //       return "index";
     // }
     //   }
-
     @PostMapping("/login")
-    String homepage(HttpSession session, @ModelAttribute("login") Users user,Admin admin,
+    String homepage(HttpSession session, @ModelAttribute("user") Users user,
         @RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
       System.out.println("Login Error PAram : " + loginError);
       try (Connection connection = dataSource.getConnection()) {
@@ -67,17 +66,19 @@ public class LoginController {
         while (resultSet.next()) {
           String pwd = resultSet.getString("password");
           String email = resultSet.getString("email");
-          int userId = resultSet.getInt("userid");
+          String name = resultSet.getString("username");
+          String address = resultSet.getString("address");
+          int userid = resultSet.getInt("userid");
 
-          System.out.println(pwd + email + userId);
+          System.out.println(pwd + email + userid);
 
           if (user.getUsername() != "" && user.getPassword() != "") {
             if (email.equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), pwd)) {
   
-              session.setAttribute("email", user.getEmail());
-              session.setAttribute("userId", userId);
+              session.setAttribute("username", user.getUsername());
+              session.setAttribute("userId", userid);
               session.setMaxInactiveInterval(1440 * 60);
-              System.out.println("user id : " + session.getAttribute("userId"));
+              System.out.println(session.getAttribute("userId"));
               returnPage = "redirect:/cusdashboard";
               break;
             } else {
@@ -97,4 +98,6 @@ public class LoginController {
         return "index";
       }
 }
-}
+   
+  }
+

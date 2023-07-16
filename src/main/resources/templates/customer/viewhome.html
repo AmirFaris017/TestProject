@@ -35,12 +35,12 @@
         <a class="navbar-brand" th:href="@{/}">
             <img src="" alt="" />
         </a>
-        <a th:href="@{/admindashboard}">Homestay Semujuk</a>
-        <a th:href="@{/admindashboard}">Home</a>
-        <a th:href="@{/adminabout}">About us</a>
-        <a class="active" th:href="@{/adminbook}">Booking</a>
+        <a th:href="@{/cusdashboard}">Homestay Semujuk</a>
+        <a th:href="@{/cusdashboard}">Home</a>
+        <a th:href="@{/cusabout}">About us</a>
+        <a class="active" th:href="@{/cusbook}">Booking</a>
         <div class="topnav-right" style="display: flex;">
-            <a th:href="@{/admindetails}"><img src="image/profile-admin.png" alt="" width="30px"></a>
+            <a th:href="@{/customerdetails}"><img src="image/user-profile.png" alt="" width="30px"></a>
         </div>
     </div>
 
@@ -54,28 +54,29 @@
                     <img th:src="${homestay.imageSrc}" class="img-fluid" alt="Homestay Image">
                 </div>
                 <div class="col-md-6 homestay-details" style="background-color:#cfcaca;">
-                    <form th:action="@{/updatehomestay/{homestayid}(homestayid=${homestay.homestayid})}" method="post">
+                    
                         <input type="hidden" id="homestayid" name="homestayid" th:value="${homestay.homestayid}">
                         <div class="form-group">
-                            <label for="homestayName">Homestay Name:</label>
-                            <input type="text" class="form-control" id="homestayName" name="homestayname" th:value="${homestay.homestayname}">
+                            <label for="homestayName">Name:</label>
+                            <input type="text" class="form-control" id="homestayName" name="homestayname" th:value="${homestay.homestayname}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="homestayLocation">Location:</label>
-                            <input type="text" class="form-control" id="homestayLocation" name="homestaylocation" th:value="${homestay.homestaylocation}">
+                            <input type="text" class="form-control" id="homestayLocation" name="homestaylocation" th:value="${homestay.homestaylocation}" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="homestayPrice">Price:</label>
-                            <input type="number" class="form-control" id="homestayPrice" name="homestayprice" th:value="${homestay.homestayprice}">
+                            <label for="homestayPrice">Price per Day:</label>
+                            <input type="number" class="form-control" id="homestayPrice" name="homestayprice" th:value="${homestay.homestayprice}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="homestayDetails">Details:</label>
-                            <textarea class="form-control" id="homestayDetails" name="homestaydetails" rows="4" th:text="${homestay.homestaydetails}"></textarea>
+                            <textarea class="form-control" id="homestayDetails" name="homestaydetails" rows="4" th:text="${homestay.homestaydetails}" readonly></textarea>
                         </div>
                         <!-- Add more details here if needed -->
-                        <button type="submit" class="btn btn-primary">Update</button>
-                        <a class="btn btn-danger" th:href="@{/deletehomestay(homestayid=${homestay.homestayid})}">Delete</a>
-                    </form>
+                        <a class="btn btn-primary" th:href="@{/booking/{homestayid}(homestayid=${homestay.homestayid})}">Book Now</a>
+
+                        <!-- <a th:href="@{/viewhome}">About us</a>test tpi tk jadi gak -->
+                    
                 </div>
             </div>
         </div>

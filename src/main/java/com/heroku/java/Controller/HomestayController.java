@@ -126,6 +126,35 @@ public class HomestayController {
         }
     } 
 
+     @GetMapping("/viewhome")
+    public String viewhome (@RequestParam("homestayid") int homestayid, Model model){
+        try{
+            Connection connection = dataSource.getConnection();
+            String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
+            final var statement = connection.prepareStatement(sql);
+            statement.setInt(1, homestayid);
+            final var resultSet = statement.executeQuery();
+    
+            if(resultSet.next()){
+                String homestayname = resultSet.getString("homestayname");
+                String homestaylocation = resultSet.getString("homestaylocation");
+                Double homestayprice = resultSet.getDouble("homestayprice");
+                String homestaydetails = resultSet.getString("homestaydetails");
+                byte[] homestaybytes = resultSet.getBytes("homestaypic");
+                String base64Image = Base64.getEncoder().encodeToString(homestaybytes);
+                String imageSrc = "data:image/jpeg;base64," + base64Image;
+    
+                Homestay homestay = new Homestay(homestayid, homestayname, homestaylocation, homestayprice, null, homestaydetails, imageSrc);
+                model.addAttribute("homestay", homestay);
+                
+            }
+            return "customer/viewhome";
+        } catch (Throwable t) {
+            t.printStackTrace();
+            System.out.println("Error: " + t.getMessage());
+            return "index";
+        }
+    }
     @GetMapping("/viewhomestay")
     public String viewhomestaydetail (@RequestParam("homestayid") int homestayid, Model model){
         try{

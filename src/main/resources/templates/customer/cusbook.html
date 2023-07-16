@@ -15,11 +15,10 @@
         .homestay-title {
             background-color: rgb(196, 196, 196);
             border-radius: 10px;
-            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 10px;
+            
         }
         .add-homestay {
             background-color: #007bff;
@@ -50,8 +49,8 @@
         <a class="navbar-brand" th:href="@{/}">
             <img src="" alt="" />
         </a>
-        <a th:href="@{/cusdahboard}">Homestay Semujuk</a>
-        <a th:href="@{/cusdahboard}">Home</a>
+        <a th:href="@{/cusdashboard}">Homestay Semujuk</a>
+        <a th:href="@{/cusdashboard}">Home</a>
         <a th:href="@{/cusabout}">About us</a>
         <a class="active" th:href="@{/cusbook}">Booking</a>
         <div class="topnav-right" style="display: flex;">
@@ -62,7 +61,7 @@
     <main>
         <div class="d-flex justify-content-center mt-4">
             <div class="homestay-title">
-                <p class="text-center mt-0">Choose Your Homestay</p>
+                <p class="text-center mt-3">Choose Your Homestay</p>
             </div>
         </div>
         <div class="container-fluid mt-4">
@@ -72,7 +71,7 @@
                         <img th:src="${homestay.imageSrc}" class="card-img-top" alt="Homestay Image">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${homestay.homestayname}"></h5>
-                            <a class="btn btn-primary btn-block text-center" th:href="@{/viewhomestay(homestayid=${homestay.homestayid})}">View</a>
+                            <a class="btn btn-primary btn-block text-center" th:href="@{/viewhome(homestayid=${homestay.homestayid})}">View</a>
                         </div>
                     </div>
                 </div>

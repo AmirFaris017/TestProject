@@ -1,5 +1,5 @@
 <!DOCTYPE html>   
-<html>   
+<html xmlns:th="http://www.thymeleaf.org"> 
 <head>  
 <meta name="viewport" content="width=device-width, initial-scale=1">  
 <title> Login Page </title>  
@@ -20,15 +20,15 @@
         </div>
       </div>
     <center> <h1> Log in </h1> </center>   
-    <form th:action="@{/login}" method="post" modelAttribute="login" th:object="${user}">  
+    <form th:action="@{/login}" method="post" modelAttribute="login">  
         <div class="container">   
             <label class="form">Email Address : </label>   
             <input type="text" placeholder="Enter Email" name="email" required>  <br>
             <label class="form">Password : </label>   
             <input type="password" placeholder="Enter Password" name="password" required>  
             <br>
-            <input type="radio" class="role" name="role" placeholder="Admin">Admin
-            <input type="radio" class="role" name="role" placeholder="Customer">Customer
+            <input type="radio" class="role" name="role" placeholder="Admin" >Admin
+            <input type="radio" class="role" name="role" placeholder="Customer" >Customer
            <div class="justify-content-center mb-2">
             <button type="submit" style="margin-left: 235px;">Sign in</button>  <br>    
            </div>

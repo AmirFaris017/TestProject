@@ -62,7 +62,7 @@ public class UsersController {
     }
 
     @GetMapping("/customerdetails")
-    public String viewProfile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
+    public String viewprofile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
        
         String username = (String) session.getAttribute("username");
         int userid = (int) session.getAttribute("userId");

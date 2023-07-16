@@ -113,6 +113,12 @@ public class GettingStartedApplication {
     }
 
     
+    @GetMapping("userdetails")
+    public String userdetails(){
+        return "admin/userdetails";
+    }
+    
+    
 
     @GetMapping("/database")
     String database(Map<String, Object> model) {
