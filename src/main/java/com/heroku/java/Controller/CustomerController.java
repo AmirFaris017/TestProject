@@ -64,43 +64,44 @@ public class CustomerController {
         }
     }
     @GetMapping("/customerdetails")
-    public String viewProfile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
-       
-        String username = (String) session.getAttribute("username");
-        int userid = (int) session.getAttribute("userId");
+public String viewProfile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
+   
+    String username = (String) session.getAttribute("username");
+    int userid = (int) session.getAttribute("userId");
 
-        System.out.println("id customer details : " + userid);
+    System.out.println("id customer details : " + userid);
 
-        try {
-            Connection connection = dataSource.getConnection();
-            String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.usersid = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, userid);
-            System.out.println("int : " + userid);
-            ResultSet resultSet = statement.executeQuery();
+    try {
+        Connection connection = dataSource.getConnection();
+        String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.usersid = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, userid);
+        System.out.println("int : " + userid);
+        ResultSet resultSet = statement.executeQuery();
 
-            
-            while (resultSet.next()) {
-                username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
-                System.out.println("fullname from db: " + username);
-
-                Users customerdetails = new Users( username, password, email, address);
-                // usr.add(customerdetails);
-                model.addAttribute("customerdetails", customerdetails);
-                System.out.println("fullname " + customerdetails.getUsername());
-                // Return the view name for displaying customer details --debug
-                System.out.println("Session customerdetails : " + model.getAttribute("customerdetails"));
-            }
-            // model.addAttribute("users_db", usr);
-            return "customer/customerdetails";
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         
-        return "login";
+        while (resultSet.next()) {
+            username = resultSet.getString("username");
+            String password = resultSet.getString("password");
+            String email = resultSet.getString("email");
+            String address = resultSet.getString("address");
+            System.out.println("fullname from db: " + username);
+
+            Users customerdetails = new Users( username, password, email, address,null);
+            // usr.add(customerdetails);
+            model.addAttribute("customerdetails", customerdetails);
+            System.out.println("fullname " + customerdetails.getUsername());
+            // Return the view name for displaying customer details --debug
+            System.out.println("Session customerdetails : " + model.getAttribute("customerdetails"));
+        }
+        // model.addAttribute("users_db", usr);
+        return "customer/customerdetails";
+
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    
+    return "login";
+}
+
 }

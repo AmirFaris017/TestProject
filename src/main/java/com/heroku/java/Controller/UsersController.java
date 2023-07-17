@@ -39,7 +39,7 @@ public class UsersController {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getEmail());
-            statement.setString(3, passwordEncoder.encode(user.getPassword()));
+            statement.setString(3, user.getPassword());
             statement.setString(4, user.getAddress());
             statement.setString(5, user.getPhoneNo());
 
@@ -63,15 +63,12 @@ public class UsersController {
 
     @GetMapping("/customerdetails")
     public String viewprofile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
-       
-        String username = (String) session.getAttribute("username");
         int userid = (int) session.getAttribute("userId");
-
-        System.out.println("id customer details : " + userid);
-
+        String email = (String) session.getAttribute("email");
+        
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.userid = ?";
+            String sql = "SELECT userid,username, password, email, address FROM users_ds WHERE users_ds.userid = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userid);
             System.out.println("int : " + userid);
@@ -79,13 +76,14 @@ public class UsersController {
 
             
             while (resultSet.next()) {
-                username = resultSet.getString("username");
+                String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
+                email = resultSet.getString("email");
                 String address = resultSet.getString("address");
+                
                 System.out.println("fullname from db: " + username);
 
-                Users customerdetails = new Users( username, password, email, address);
+                Users customerdetails = new Users( username, password, email, address,null);
                 // usr.add(customerdetails);
                 model.addAttribute("customerdetails", customerdetails);
                 System.out.println("fullname " + customerdetails.getUsername());
@@ -106,16 +104,17 @@ public class UsersController {
     @PostMapping("/updateprofile")
     public String updateProfile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
         int userid = (int) session.getAttribute("userId");
+        String email = (String) session.getAttribute("email");
         System.out.println("id customer update : " + userid);
 
         String username = user.getUsername();
         String password = user.getPassword();
-        String email = user.getEmail();
+        email = user.getEmail();
         String address = user.getAddress();
         
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "UPDATE users_ds SET username=?, password=?, email=?, address=? WHERE usersid=?";
+            String sql = "UPDATE users_ds SET username=?, password=?, email=?, address=? WHERE userid=?";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setString(1, username);
@@ -140,13 +139,13 @@ public class UsersController {
 
     @PostMapping("/deleteprofile")
     public String deleteProfile(HttpSession session,Model model) {
-    String username = (String) session.getAttribute("username");
-     int userid = (int) session.getAttribute("userId");
+    int userid = (int) session.getAttribute("userId");
+     String email = (String) session.getAttribute("email");
 
     
         try (Connection connection = dataSource.getConnection()) {
-            final var statement = connection.prepareStatement("DELETE FROM users_ds WHERE users_ds.usersid=?");
-            statement.setInt(1, userid);
+            final var statement = connection.prepareStatement("DELETE FROM users_ds WHERE users_ds.userid=?");
+            statement.setString(1, email);
             
             // Execute the delete statement
             statement.executeUpdate();

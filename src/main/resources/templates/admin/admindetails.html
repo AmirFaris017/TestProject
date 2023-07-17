@@ -14,10 +14,10 @@
     <a class="navbar-brand" th:href="@{/}">
         <img src="" alt="" />
     </a>
-    <a th:href="@{/cusdashboard}">Homestay Semujuk</a>
-    <a class="active" th:href="@{/cusdashboard}">Home</a>
-    <a th:href="@{/cusabout}">About us</a>
-    <a th:href="@{/cusbook}">Booking</a>
+    <a th:href="@{/admindashboard}">Homestay Semujuk</a>
+    <a class="active" th:href="@{/admindashboard}">Home</a>
+    <a th:href="@{/adminabout}">About us</a>
+    <a th:href="@{/adminbook}">Booking</a>
     <div class="topnav-right" style="display: flex;">
         <a th:href="@{/}">Logout</a>
     </div>
@@ -27,7 +27,7 @@
     <p style="font-weight: bold; font-size: 35px;">Admin Details</p>
 </div>
 <div class="d-flex justify-content-center box " style="background-color:#cfcaca;margin: 0 20%;" >
-    <form th:action="@{/}" method="post" modelAttribute="customerdetails"  style="width: 75%;">
+    <form th:action="@{/}" method="post" modelAttribute="userdetails"  style="width: 75%;">
         <legend class="scheduler-border">Personal Information</legend>
         <fieldset class="scheduler-border field">
             <label for="name">Name:</label>

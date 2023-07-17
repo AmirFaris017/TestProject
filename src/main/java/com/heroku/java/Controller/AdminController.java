@@ -78,37 +78,37 @@ public class AdminController {
         return "index";
       }
 }
-    @GetMapping("/customerdetails")
-    public String viewProfile(HttpSession session, @ModelAttribute("customerdetails") Users user, Model model) {
+    @GetMapping("/admindetails")
+    public String viewProfile(HttpSession session, @ModelAttribute("admindetails") Admin admin, Model model) {
        
         String username = (String) session.getAttribute("username");
-        int userid = (int) session.getAttribute("userId");
+        int adminid = (int) session.getAttribute("adminId");
 
-        System.out.println("id customer details : " + userid);
+        System.out.println("id customer details : " + adminid);
 
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.usersid = ?";
+            String sql = "SELECT adminname, adminemail, adminpassword, adminaddress FROM admin WHERE admin.adminid = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, userid);
-            System.out.println("int : " + userid);
+            statement.setInt(1, adminid);
+            System.out.println("int : " + adminid);
             ResultSet resultSet = statement.executeQuery();
 
             
             while (resultSet.next()) {
-                username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                String email = resultSet.getString("email");
-                String address = resultSet.getString("address");
+                username = resultSet.getString("adminname");
+                String password = resultSet.getString("adminpassword");
+                String email = resultSet.getString("adminemail");
+                String address = resultSet.getString("adminaddress");
                 
                 System.out.println("fullname from db: " + username);
 
-                Users customerdetails = new Users(username, password, email, address);
+                Admin admindetails = new Admin(username, password, email, address,null);
                 // usr.add(customerdetails);
-                model.addAttribute("customerdetails", customerdetails);
-                System.out.println("fullname " + customerdetails.getUsername());
+                model.addAttribute("admindetails", admindetails);
+                System.out.println("fullname " + admindetails.getUsername());
                 // Return the view name for displaying customer details --debug
-                System.out.println("Session admindetails : " + model.getAttribute("customerdetails"));
+                System.out.println("Session admindetails : " + model.getAttribute("admindetails"));
             }
             // model.addAttribute("users_db", usr);
             return "customer/admindetails";

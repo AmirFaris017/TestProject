@@ -5,14 +5,21 @@ public class Admin  {
   private String password;
   private String email;
   private String address;
+  private int adminid;
   
-  public Admin(String username, String password, String email, String address) {
+  public Admin(){
+
+  }
+  public Admin(String username, String password, String email, String address,int adminid) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.address = address;
+    this.adminid = adminid;
   }
 
+  public Admin(String username2, String password2, String email2, String address2, Object object) {
+  }
   public String getUsername() {
     return username;
   }
@@ -44,6 +51,16 @@ public class Admin  {
   public void setAddress(String address) {
     this.address = address;
   }
+
+  public int getAdminid() {
+    return adminid;
+  }
+
+  public void setAdminid(int adminid) {
+    this.adminid = adminid;
+  }
+
+  
 
   
 

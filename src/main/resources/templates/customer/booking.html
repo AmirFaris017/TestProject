@@ -92,9 +92,10 @@
                             <label for="day">Day:</label>
                             <input type="text" class="form-control" id="day" name="day" readonly>
                         </div>
-                        <input type="hidden" id="bookdate" name="bookdate" >
+                        <input type="hidden" class="form-control" id="bookDate" name="bookDate" value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+                        <input type="hidden" class="form-control" id="totalAmount" name="totalamount" >
 
-                        <button class="btn btn-primary mt-3" type="submit">Book Now</button>
+                        <button class="btn btn-primary mt-3" type="submit" >Confirm Book</button>
                     </form>
                 </div>
             </div>
@@ -108,13 +109,26 @@
         document.getElementById('starttime').setAttribute('min', startMinDate);
         document.getElementById('endtime').setAttribute('min', startMinDate);
 
-        function calculateDays() {
-            var startDate = new Date(document.getElementById('starttime').value);
-            var endDate = new Date(document.getElementById('endtime').value);
-            var timeDiff = endDate.getTime() - startDate.getTime();
-            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            document.getElementById('day').value = daysDiff;
-        }
+        var bookDateInput = document.getElementById('bookDate');
+        bookDateInput.value = formatDate(currentDate);
+
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = String(date.getMonth() + 1).padStart(2, '0');
+            var day = String(date.getDate()).padStart(2, '0');
+            return year + '-' + month + '-' + day;
+    }
+    function calculateDays() {
+        var startDate = new Date(document.getElementById('starttime').value);
+        var endDate = new Date(document.getElementById('endtime').value);
+        var timeDiff = endDate.getTime() - startDate.getTime();
+        var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        var homestayPrice = parseFloat(document.getElementById('homestayPrice').value);
+        var totalAmount = daysDiff * homestayPrice;
+        document.getElementById('day').value = daysDiff;
+        document.getElementById('totalAmount').value = totalAmount.toFixed(2); // Set the value to 2 decimal places
+}
+
     </script>
 </body>
 </html>
