@@ -46,8 +46,6 @@ public class CustomerController {
             statement1.executeUpdate();
             connection.close();
 
-            
-
 
             return "redirect:/login";
         } catch (SQLException sqe) {
