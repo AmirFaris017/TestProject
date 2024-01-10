@@ -5,11 +5,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+// import com.heroku.DAO.LoginDAO;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.apache.logging.log4j.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -67,6 +76,11 @@ public class GettingStartedApplication {
         return "customer/cusdashboard";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }   
+
     // @GetMapping("customerDetails")
     // public String customerdetails(){
     //     return "customer/customerdetails";
@@ -82,20 +96,6 @@ public class GettingStartedApplication {
         return "customer/cusabout";
     }
 
-    @GetMapping("booking")
-    public String booking(){
-        return "customer/booking";
-    }
-    @GetMapping("cusbook")
-    public String cusbook(){
-        return "customer/cusbook";
-    }
-
-    @GetMapping("adminbook")
-    public String adminbook(){
-        return "admin/adminbook";
-    }
-
     @GetMapping("adminabout")
     public String adminabout(){
         return "admin/adminabout";
@@ -106,20 +106,50 @@ public class GettingStartedApplication {
         return "admin/addhomestay";
     }
 
-    @GetMapping("homestayA")
-    public String homestayA(){
-        return "customer/homestayA";
+    
+
+    @GetMapping("payment")
+    public String payment(){
+        return "customer/payment";
     }
 
-    @GetMapping("homestayB")
-    public String homestayB(){
-        return "customer/homestayB";
+    
+    @GetMapping("userdetails")
+    public String userdetails(){
+        return "admin/userdetails";
     }
+    
+//     @PostMapping("/login")
+// public String login(HttpSession session, @RequestParam("email") String email,
+//                     @RequestParam("password") String password, Model model) {
+//     System.out.println(email);
+//     try {
+//         LoginDAO loginDAO = new LoginDAO(dataSource);
+        
+//         boolean isCustomer = loginDAO.checkCustomer(email, password);
+//         boolean isAdmin = loginDAO.checkAdmin(email, password);
+        
+//         if (isCustomer) {
+//             int userid = loginDAO.getCustomerId(email); // Retrieve the userid from the database
+//             session.setAttribute("email", email);
+//             session.setAttribute("userid", userid);
+//             return "redirect:/cusdashboard"; // Replace with the appropriate customer home page URL
+//         } else if (isAdmin) {
+//             session.setAttribute("email", email);
+//             return "redirect:/admindashboard";
+//         } else {
+//             System.out.println("Invalid email or password");
+//             model.addAttribute("error", true); 
+//             return "login"; 
+//         }
+//     } catch (SQLException e) {
+//         e.printStackTrace();
+//         model.addAttribute("error", true); 
+//         return "login";
+//     }
+// }
 
-    @GetMapping("homestayC")
-    public String homestayC(){
-        return "customer/homestayC";
-    }
+    
 
     @GetMapping("/database")
     String database(Map<String, Object> model) {

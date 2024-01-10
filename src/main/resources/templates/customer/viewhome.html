@@ -7,8 +7,12 @@
     <title>Semujuk Homestay</title>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    
     <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .homestay-image {
             flex: 0 0 50%;
             max-width: 50%;
@@ -52,7 +56,7 @@
     <nav class="navbar navbar-expand-lg navbar-secondary" style="background-color: #D9D9D9;">
         <div class="container">
             <a class="navbar-brand" th:href="@{/}">
-                <img th:src="@{'/image/homestay.png'}" alt="" style="max-width: 100px;height: auto;"/>
+                <img src="image/homestay.png" alt="" style="max-width: 100px;height: auto;"/>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -72,7 +76,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img th:src="@{/image/user-profile.png}" alt="" width="30px">
+                            <img src="image/user-profile.png" alt="" width="30px">
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" th:href="@{/customerdetails}">Profile</a>
@@ -85,52 +89,54 @@
         </div>
     </nav>
     <main>
-        <div>
-            <div class="justify-content-start">
-                <a class="btn btn-primary" style="margin-left: 1rem;" onclick="window.history.back()">
-                    <i class="bi bi-arrow-return-left"></i>
-                </a>
-            </div>
-            <div class="d-flex justify-content-center mt-1">
-                <div class="homestay-title" style="background-color: #D9D9D9; border-radius: 10px;width: 130px;">
-                    <p class="text-center">Booking Form</p>
-                </div>
-            </div>
-        </div>
+        <a class="btn btn-primary" style="margin-left: 1rem;" onclick="window.history.back()">
+            <i class="bi bi-arrow-return-left"></i>
+        </a>
         <div class="container mt-4">
             <div class="row">
-                <div class="col-md-6 homestay-image" style="border-radius: 10px;">
+                <div class="col-md-6 homestay-image">
                     <img th:src="${homestay.imageSrc}" class="img-fluid" alt="Homestay Image">
                 </div>
-                <div class="col-md-6 homestay-details" style="background-color:#cfcaca;">
-                    <form th:action="@{/addbooking}" method="post">
+                <div class="col-md-6 homestay-details" style="background-color:#cfcaca; border-radius: 10px;">
+                    
                         <input type="hidden" id="homestayid" name="homestayid" th:value="${homestay.homestayid}">
                         <div class="form-group">
                             <label for="homestayName">Name:</label>
                             <input type="text" class="form-control" id="homestayName" name="homestayname" th:value="${homestay.homestayname}" readonly>
                         </div>
                         <div class="form-group">
+                            <label for="homestayLocation">Location:</label>
+                            <input type="text" class="form-control" id="homestayLocation" name="homestaylocation" th:value="${homestay.homestaylocation}" readonly>
+                        </div>
+                        <div class="form-group">
                             <label for="homestayPrice">Price per Day:</label>
                             <input type="number" class="form-control" id="homestayPrice" name="homestayprice" th:value="${homestay.homestayprice}" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="startTime">Start Time:</label>
-                            <input type="date" class="form-control" id="starttime" name="startDate"  min="${startMinDate}" onchange="updateDateRestrictions()">
+                            <label for="homestayDetails">Details:</label>
+                            <textarea class="form-control" id="homestayDetails" name="homestaydetails" rows="4" th:text="${homestay.homestaydetails}" readonly></textarea>
                         </div>
+                        <!-- Add more details here if needed -->                    
                         <div class="form-group">
-                            <label for="endTime">End Time:</label>
-                            <input type="date" class="form-control" id="endtime" name="endDate" min="${startMinDate}" onchange="updateDateRestrictions();calculateDays();" >
+                            <form th:action="@{/checkavailability}" class="row g-3" style="margin-top: 10px;background-color: #C9E9FA;border-radius: 10px;">
+                                <p>Check Availability</p>
+                                <div class="col-md-6">
+                                    <label for="startTime" class="form-label">Check In</label>
+                                    <input type="date" class="form-control" id="starttime" name="startDate">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="endtime" class="form-label">Check Out</label>
+                                    <input type="date" class="form-control" id="endtime" name="endDate">
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <button class="btn btn-primary" type="submit">Check</button>
+                                </div>
+                            </form>  
                         </div>
-                        <p id="dateErrorMessage" style="color: red;"></p>
-                        <div class="form-group">
-                            <label for="day">Day:</label>
-                            <input type="text" class="form-control" id="day" name="day" readonly>
-                        </div>
-                        <input type="hidden" class="form-control" id="bookDate" name="bookDate" value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
-                        <input type="hidden" class="form-control" id="totalAmount" name="totalamount" >
+                        <!-- <a class="btn btn-primary mt-3" th:href="@{/booking/{homestayid}(homestayid=${homestay.homestayid})}" onclick="checkAvailability()">Book Now</a> -->
 
-                        <button class="btn btn-primary mt-3" type="submit" id="submitBtn">Confirm Book</button>
-                    </form>
+                        <!-- <a th:href="@{/viewhome}">About us</a>test tpi tk jadi gak -->
+                    
                 </div>
             </div>
         </div>
@@ -139,36 +145,24 @@
         <p>&copy; 2021 Homestay Semujuk</p>
     </footer>
     <script>
-        // Calculate the start date (sysdate + 1 day)
-        var currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + 1);
-        var startMinDate = currentDate.toISOString().split('T')[0];
-        document.getElementById('starttime').setAttribute('min', startMinDate);
-        document.getElementById('endtime').setAttribute('min', startMinDate);
-
-        var bookDateInput = document.getElementById('bookDate');
-        bookDateInput.value = formatDate(currentDate);
-
-        function formatDate(date) {
-            var year = date.getFullYear();
-            var month = String(date.getMonth() + 1).padStart(2, '0');
-            var day = String(date.getDate()).padStart(2, '0');
-            return year + '-' + month + '-' + day;
-    }
-    function calculateDays() {
-        var startDate = new Date(document.getElementById('starttime').value);
-        var endDate = new Date(document.getElementById('endtime').value);
-        var timeDiff = endDate.getTime() - startDate.getTime();
-        var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        var homestayPrice = parseFloat(document.getElementById('homestayPrice').value);
-        var totalAmount = daysDiff * homestayPrice;
-        document.getElementById('day').value = daysDiff;
-        document.getElementById('totalAmount').value = totalAmount.toFixed(2); // Set the value to 2 decimal places
-}
-
+        async function checkAvailability() {
+            const startDate = document.getElementById('starttime').value;
+            const endDate = document.getElementById('endtime').value;
+            const homestayId = document.getElementById('homestayid').value;
+    
+            const response = await fetch(`/checkavailability?homestayId=${homestayId}&startDate=${startDate}&endDate=${endDate}`);
+            const result = await response.json();
+    
+            if (result.available) {
+                // Dates are available, redirect to booking page
+                window.location.href = `/booking?homestayId=${homestayId}&startDate=${startDate}&endDate=${endDate}`;
+            } else {
+                // Dates are not available, display a message
+                alert('Selected dates are not available. Please choose different dates.');
+            }
+        }
     </script>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 </body>
 </html>
