@@ -76,6 +76,11 @@ public class GettingStartedApplication {
         return "customer/cusdashboard";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }   
+
     // @GetMapping("customerDetails")
     // public String customerdetails(){
     //     return "customer/customerdetails";
@@ -101,20 +106,7 @@ public class GettingStartedApplication {
         return "admin/addhomestay";
     }
 
-    @GetMapping("homestayA")
-    public String homestayA(){
-        return "customer/homestayA";
-    }
-
-    @GetMapping("homestayB")
-    public String homestayB(){
-        return "customer/homestayB";
-    }
-
-    @GetMapping("homestayC")
-    public String homestayC(){
-        return "customer/homestayC";
-    }
+    
 
     @GetMapping("payment")
     public String payment(){

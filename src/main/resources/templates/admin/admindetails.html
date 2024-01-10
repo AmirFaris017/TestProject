@@ -7,32 +7,55 @@
     <title>Semujuk Homestay</title>
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<div class="topnav">
-    <a class="navbar-brand" th:href="@{/}">
-        <img src="" alt="" />
-    </a>
-    <a th:href="@{/admindashboard}">Homestay Semujuk</a>
-    <a class="active" th:href="@{/admindashboard}">Home</a>
-    <a th:href="@{/adminabout}">About us</a>
-    <a th:href="@{/adminbook}">Booking</a>
-    <div class="topnav-right" style="display: flex;">
-        <a th:href="@{/}">Logout</a>
-    </div>
-</div>
+    <nav class="navbar navbar-expand-lg navbar-secondary" style="background-color: #D9D9D9;">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="image/homestay.png" alt="" style="max-width: 100px;height: auto;"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">    
+                        <a class="nav-link" th:href="@{/admindashboard}" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/adminabout}">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/adminbook}" >Available Room</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" th:href="@{/addhomestay}" >Add Homestay</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" th:href="@{/listbooking}" >Homestay Booking</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 <div class="text-center mt-4">
     <img src="image/profile-admin.png" alt="" width="135px">
     <p style="font-weight: bold; font-size: 35px;">Admin Details</p>
 </div>
 <div class="d-flex justify-content-center box " style="background-color:#cfcaca;margin: 0 20%;" >
-    <form th:action="@{/updateprofile}" method="post" th:object="${admin}" style="width: 75%;">
+    <form th:action="@{/updateprofile}" method="post"  modelAttribute="admin" th:object="${admin}" style="width: 100%;">
         <!-- ... -->
         <legend class="scheduler-border">Personal Information</legend>
         <fieldset class="scheduler-border field">
             <label for="name">Name:</label>
-            <input class="form-control f" type="text" id="name" name="username" placeholder="Name" th:value="${admin.username}" ><br><br>
+            <input class="form-control f" type="text" id="name" name="username" placeholder="Name" th:value="${admin.name}" ><br><br>
             <label for="email">Email Address:</label>
             <input class="form-control f" type="text" id="email" name="email" placeholder="Email Address" th:value="${admin.email}"><br><br>
             <label for="password">Password:</label>
@@ -52,6 +75,7 @@
         </div>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

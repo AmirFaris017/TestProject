@@ -1,56 +1,90 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Semujuk Homestay</title>
-        <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}"> 
-        <link rel="stylesheet" th:href="@{/css/index.css}">
-    </head>
-<body>    
-    <!-- <div class="topnav">
-        <a class="navbar-brand" th:href="@{/index.html}">
-            <img src=""   alt="" />
-        </a>
-        <a  th:="@{/}">Home</a>
-        <a th:ref="@{/}">About us</a>
-        <a th:ref="@{/}"></a>Booking</a>
-        <div class="topnav-right">
-            <a th:="@{/login}">Login</a>
-            <a class="active" th:href="@{/signUp}">Sign Up</a>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semujuk Homestay</title>
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-secondary" style="background-color: #D9D9D9;">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img src="image/homestay.png" alt="" style="max-width: 100px;height: auto;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/about}">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Booking</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div> -->
-      <div class="topnav">
-        <a class="navbar-brand" th:href="@{/}">
-            <img src=""   alt="" />
-        </a>
-        <a th:href="@{/}">Homestay Semujuk</a>
-        <a  th:href="@{/}">Home</a>
-        <a th:href="@{/}">About us</a>
-        <a th:href="@{/}">Booking</a>
-        <div class="topnav-right">
-            <a  th:href="@{/login}">Login</a>
-            <a  class="active" th:href="@{/signUp}">Sign Up</a>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <center>
+                    <h1>Create new account</h1>
+                </center>
+                <form th:action="@{/registerAcc}" method="post" th:object="${register}" modelAttribute="register">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address:</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Enter Password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address:</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNo" class="form-label">Phone no:</label>
+                        <input type="number" class="form-control" id="phoneNo" name="phoneNo"
+                            placeholder="Enter phoneno" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" checked>
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <div>
+                        <a th:href="@{/login}">Already have an account</a>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-    <center> <h1> Create new account </h1> </center>   
-    <form th:action="@{/registerAcc}" method="post"th:object="${register}" modelAttribute="register" >  
-        <div class="container">   
-            <label>Username : </label>   
-            <input type="text" placeholder="Enter Username" name="username" required>  
-            <label>Email Address : </label>   
-            <input type="text" placeholder="Enter Email" name="email" required>  
-            <label>Password : </label>   
-            <input type="password" placeholder="Enter Password" name="password" required>  
-            <label>Adress : </label>   
-            <input type="text" placeholder="Enter Address" name="address" required>  
-            <label>Phone no : </label>   
-            <input type="text" placeholder="Enter phoneno" name="phoneNo" required>  
-            <a href="@{/login}"><button type="submit">Sign up</button></a>  <br> 
-            <input type="checkbox" checked="checked"> Remember me  <br> 
-            <a th:href="@{/login}">Already have an account</a>
-        </div>   
-    </form>     
-</body>     
-</html>  
+    </div>
+</body>
+
+</html>

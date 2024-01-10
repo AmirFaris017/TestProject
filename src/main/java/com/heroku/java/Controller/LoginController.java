@@ -34,66 +34,6 @@ public class LoginController {
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
 
-  // @GetMapping("/")
-  // public String index(HttpSession session) {
-  //   if (session.getAttribute("username") != null) {
-  //     return "redirect:/dashboard";
-  //   } else {
-  //     System.out.println("Session expired or invalid...");
-  //     return "index";
-  //   }
-  // }
-
-  // @PostMapping("/login")
-  //   String homepage(HttpSession session, @ModelAttribute("login") Users user,Admin admin,
-  //       @RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
-  //     System.out.println("Login Error PAram : " + loginError);
-  //     try (Connection connection = dataSource.getConnection()) {
-  //       final var statement = connection.createStatement();
-  //       System.out.println("connected");
-  
-  //       final var resultSet = statement.executeQuery("SELECT * FROM users_ds;");
-          
-  //       String returnPage = "";
-  //       System.out.print("resultset " + resultSet);
-        
-  //       while (resultSet.next()) {
-  //         String pwd = resultSet.getString("password");
-  //         String email = resultSet.getString("email");
-  //         String name = resultSet.getString("username");
-  //         String address = resultSet.getString("address");
-  //         int userId = resultSet.getInt("userid");
-
-  //         System.out.println(pwd + email + userId);
-
-  //         if (user.getUsername() != "" && user.getPassword() != "") {
-  //           if (email.equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), pwd)) {
-  
-  //             session.setAttribute("username", user.getUsername());
-  //             session.setAttribute("userId", userId);
-  //             session.setMaxInactiveInterval(1440 * 60);
-  //             System.out.println("user id : " + session.getAttribute("userId"));
-  //             returnPage = "redirect:/cusdashboard";
-  //             break;
-  //           } else {
-  //             returnPage = "redirect:/login?error=true";
-  //           }
-  
-  //         } else {
-  //           returnPage = "redirect:/login?error=true";
-  
-  //         }
-  //       }
-  //       connection.close();
-  //       return returnPage;
-  
-  //     } catch (Throwable t) {
-  //       System.out.println("message : " + t.getMessage());
-  //       return "index";
-  //     }
-  //   }
-
-
   @PostMapping("/login")
   String homepage(HttpSession session, @ModelAttribute("login") Users user, @ModelAttribute("admin") Admin admin,
       @RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
@@ -125,25 +65,31 @@ public class LoginController {
           session.setAttribute("userId", userId);
           session.setMaxInactiveInterval(1440 * 60);
           System.out.println("User ID: " + session.getAttribute("userId"));
+          model.addAttribute("loginSuccess", true);
           returnPage = "redirect:/cusdashboard";
         } else {
-          returnPage = "redirect:/login?error=true";
+          model.addAttribute("error", true);
+          returnPage = "login";
         }
       } else if (adminResultSet.next()) {
         String pwd = adminResultSet.getString("adminpassword");
         int adminId = adminResultSet.getInt("adminId");
   
         if (pwd.matches(admin.getPassword())) {
-          session.setAttribute("username", admin.getUsername());
+          session.setAttribute("username", admin.getName());
           session.setAttribute("adminId", adminId);
           session.setMaxInactiveInterval(1440 * 60);
           System.out.println("Admin ID: " + session.getAttribute("adminId"));
+          model.addAttribute("loginSuccess", true);
           returnPage = "redirect:/admindashboard";
         } else {
-          returnPage = "redirect:/login?error=true";
+          System.out.println("Invalid username or password");
+          model.addAttribute("error", true);
+          returnPage = "login"; 
         }
       } else {
-        returnPage = "redirect:/login?error=true";
+        model.addAttribute("invalidEmail", true);
+        returnPage = "login";
       }
       
       connection.close();

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.heroku.java.Model.Users;
 
@@ -118,7 +119,7 @@ public class UsersController {
             PreparedStatement statement = connection.prepareStatement(sql);
 
             statement.setString(1, username);
-            statement.setString(2, passwordEncoder.encode(password));
+            statement.setString(2, password);
             statement.setString(3, email);
             statement.setString(4, address);
             statement.setInt(5, userid);
@@ -137,18 +138,28 @@ public class UsersController {
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+        // Invalidate the session
+        session.invalidate();
+
+        // Redirect to the login page or any other desired page
+        redirectAttributes.addFlashAttribute("message", "You have been logged out successfully!");
+        return "redirect:/"; // Update with your login page URL
+    }
     @PostMapping("/deleteprofile")
     public String deleteProfile(HttpSession session,Model model) {
     int userid = (int) session.getAttribute("userId");
-     String email = (String) session.getAttribute("email");
+    String email = (String) session.getAttribute("email");
 
     
         try (Connection connection = dataSource.getConnection()) {
-            final var statement = connection.prepareStatement("DELETE FROM users_ds WHERE users_ds.userid=?");
-            statement.setString(1, email);
+            final var statement = connection.prepareStatement("DELETE FROM users_ds WHERE userid=?");
+            statement.setInt(1, userid);
             
             // Execute the delete statement
             statement.executeUpdate();
+            return "redirect:/";
 
 
         } catch (SQLException e) {
@@ -156,9 +167,5 @@ public class UsersController {
             e.printStackTrace();
             return "redirect:/deleteError";
         }
-    
-
-    // Username is null, handle accordingly (e.g., redirect to an error page)
-    return "redirect/deleteError";
 }
 }

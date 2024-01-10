@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/profile.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <style>
     /* CSS styles for the booking list page */
@@ -83,24 +84,45 @@
     }
 </style>
 <body>
-    <div class="topnav">
+  <nav class="navbar navbar-expand-lg navbar-secondary" style="background-color: #D9D9D9;">
+    <div class="container">
         <a class="navbar-brand" th:href="@{/}">
-            <img src="" alt="" />
+            <img src="image/homestay.png" alt="" style="max-width: 100px;height: auto;"/>
         </a>
-        <a th:href="@{/cusdashboard}">Homestay Semujuk</a>
-        <a th:href="@{/cusdashboard}">Home</a>
-        <a th:href="@{/cusabout}">About us</a>
-        <a class="active" th:href="@{/cusbook}">Booking</a>
-        <div class="topnav-right" style="display: flex;">
-            <a th:href="@{/customerdetails}"><img src="image/user-profile.png" alt="" width="30px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">    
+                    <a class="nav-link" th:href="@{/cusdashboard}" >Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cusabout}">About us</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/cusbook}" >Booking</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="image/user-profile.png" alt="" width="30px">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/customerdetails}">Profile</a>
+                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                        <!-- Add other items as needed -->
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
+</nav>
 
     <main>
         <div class="d-flex justify-content-start">
-            <a class="btn btn-primary" style="margin-left: 1rem;" onclick="window.history.back()">
-                <i class="bi bi-arrow-return-left"></i>
-            </a>
+            
         </div>
         <table>
             <thead>
@@ -111,20 +133,57 @@
                     <th>End Date</th>
                     <th>Total Price</th>
                     <th>Status</th>
+                    <!-- <th>Save</th> -->
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="booking : ${bookings}">
+                <form action="@{/updateBooking}" method="post">
+                  <tr th:each="booking : ${bookings}">
                     <td><img th:src="@{${booking.homestay.imageSrc}}" alt="Homestay" class="booking-image" /></td>
                     <td th:text="${booking.homestay.homestayname}"></td>
                     <td th:text="${booking.startDate}"></td>
                     <td th:text="${booking.endDate}"></td>
                     <td><span>RM</span> <span th:text="${booking.totalamount}"></span></td>
                     <td th:text="${booking.status}"></td>
+                    <!-- <td> -->
+                      <!-- <a class="btn btn-primary" href="@{/viewbooking(homestayid=${homestay.homestayid})}"></a> -->
+                      <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"  data-bs-target="#myModal">
+                      Edit</button>
+                    </td> -->
                 </tr>
+                </form>
             </tbody>
         </table>
+
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Change Date</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="@{/updateBooking}" method="post">
+                        <div class="mb-3">
+                          <label class="form-label required">Start Date</label>
+                          <input type="date" class="form-control" id="startDate" name="startDate" >
+                      </div>
+                      <div class="mb-3">
+                          <label class="form-label required">End Date</label>
+                          <input type="date" class="form-control" id="endDate" name="endDate" >
+                      </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                      <button type="submit" class="btn btn-danger">Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     
+  
 </body>
 </html>
