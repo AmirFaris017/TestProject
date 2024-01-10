@@ -82,6 +82,10 @@ public class GettingStartedApplication {
         return "customer/cusabout";
     }
 
+    @GetMapping("booking")
+    public String booking(){
+        return "customer/booking";
+    }
     @GetMapping("cusbook")
     public String cusbook(){
         return "customer/cusbook";
