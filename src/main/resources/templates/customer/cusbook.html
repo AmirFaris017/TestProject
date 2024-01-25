@@ -96,6 +96,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" th:href="@{/cusbook}" >Booking</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/viewbooking(userid=${session.userId})}">View Booking</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
@@ -134,9 +137,9 @@
             </div>
         </div>
 
-        <div class="position-fixed bottom-0 end-0 p-3">
+        <!-- <div class="position-fixed bottom-0 end-0 p-3">
             <a th:href="@{/viewbooking(userid=${session.userId})}" class="btn btn-info">View Booking</a>
-        </div>
+        </div> -->
     </main>
     <footer>
         <p>&copy; 2021 Homestay Semujuk</p>

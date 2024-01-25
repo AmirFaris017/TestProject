@@ -81,6 +81,7 @@ public class GettingStartedApplication {
         return "test";
     }   
 
+            
     // @GetMapping("customerDetails")
     // public String customerdetails(){
     //     return "customer/customerdetails";

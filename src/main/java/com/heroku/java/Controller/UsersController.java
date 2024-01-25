@@ -147,7 +147,7 @@ public class UsersController {
         redirectAttributes.addFlashAttribute("message", "You have been logged out successfully!");
         return "redirect:/"; // Update with your login page URL
     }
-    @PostMapping("/deleteprofile")
+    @GetMapping("/deleteprofile")
     public String deleteProfile(HttpSession session,Model model) {
     int userid = (int) session.getAttribute("userId");
     String email = (String) session.getAttribute("email");

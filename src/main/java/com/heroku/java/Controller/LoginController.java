@@ -36,8 +36,8 @@ public class LoginController {
 
   @PostMapping("/login")
   String homepage(HttpSession session, @ModelAttribute("login") Users user, @ModelAttribute("admin") Admin admin,
-      @RequestParam(value = "error", defaultValue = "false") boolean loginError, Model model) {
-    System.out.println("Login Error Param: " + loginError);
+       Model model) {
+    // System.out.println("Login Error Param: " + loginError);
     try (Connection connection = dataSource.getConnection()) {
       final var statement = connection.createStatement();
       System.out.println("Connected");
@@ -66,10 +66,11 @@ public class LoginController {
           session.setMaxInactiveInterval(1440 * 60);
           System.out.println("User ID: " + session.getAttribute("userId"));
           model.addAttribute("loginSuccess", true);
-          returnPage = "redirect:/cusdashboard";
+          returnPage = "customer/cusdashboard";
         } else {
-          model.addAttribute("error", true);
-          returnPage = "login";
+          System.out.println("invalid password");
+          model.addAttribute("error", true);//tukar
+          returnPage = "index";
         }
       } else if (adminResultSet.next()) {
         String pwd = adminResultSet.getString("adminpassword");
@@ -81,15 +82,16 @@ public class LoginController {
           session.setMaxInactiveInterval(1440 * 60);
           System.out.println("Admin ID: " + session.getAttribute("adminId"));
           model.addAttribute("loginSuccess", true);
-          returnPage = "redirect:/admindashboard";
+          returnPage = "admin/admindashboard";
         } else {
-          System.out.println("Invalid username or password");
-          model.addAttribute("error", true);
-          returnPage = "login"; 
+          System.out.println("Invalid email or password");
+          model.addAttribute("error", true);//tukar
+          returnPage = "index"; 
         }
       } else {
         model.addAttribute("invalidEmail", true);
-        returnPage = "login";
+        model.addAttribute("error", true);
+        returnPage = "redirect:/";
       }
       
       connection.close();

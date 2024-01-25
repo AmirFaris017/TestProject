@@ -158,8 +158,9 @@
                         <td th:text="${booking.status}">
                         </td>
                         <td>
-                            <a th:href="@{/approvebooking(bookingid=${booking.bookingid})}" class="btn btn-success">Approve</a>
-                            <a th:href="@{/rejectbooking(bookingid=${booking.bookingid})}" class="btn btn-danger">Reject</a>
+                            <a th:href="@{/approvebooking(bookingid=${booking.bookingid})}" onclick="return confirmApprove();" class="btn btn-success">Approve</a>
+                            <a th:href="@{/rejectbooking(bookingid=${booking.bookingid})}" onclick="return confirmReject();"
+                            class="btn btn-danger">Reject</a>
                         </td>
                         <td>
                             <a th:href="@{/viewreceipt(bookingid=${booking.bookingid})}" class="btn btn-primary">Receipt</a>
@@ -173,23 +174,11 @@
             <label class="form-check-label" for="hidePastBookings">Hide Past Bookings</label>
         </div>
 
-        <div class="modal" tabindex="-1" id="receipt">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Receipt</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
+                <!-- Success Messages -->
+        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+            <strong th:text="${successMessage}"></strong>
+        </div>   
+
           <script>
             function togglePastBookings() {
                 const hidePastBookingsCheckbox = document.getElementById('hidePastBookings');
@@ -215,11 +204,30 @@
                 }
             }
         </script>
+        <!-- Add this script in the head section or before the closing body tag -->
+        <script>
+            function toggleBookingStatus(bookingId, action) {
+                const confirmationMessage = `Are you sure you want to ${action.toLowerCase()} this booking?`;
+
+                if (confirm(confirmationMessage)) {
+                    window.location.href = `/${action.toLowerCase()}booking?bookingid=${bookingId}`;
+                }
+            }
+        </script>
+
     </main>
     <!-- JavaScript code -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function confirmReject() {
+            return confirm(`Are you sure you want to reject this booking ?`);
+        }
 
+        function confirmApprove(){
+            return confirm('Are you sure you want to approve this booking ?')
+        }
+    </script>
 </body>
 
 </html>

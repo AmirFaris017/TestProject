@@ -1,104 +1,114 @@
-<!DOCTYPE html>   
-<html xmlns:th="http://www.thymeleaf.org"> 
-<head>  
-<meta name="viewport" content="width=device-width, initial-scale=1">  
-<title> Login Page </title>  
-<!-- <link rel="stylesheet" th:href="@{/css/index.css}"> -->
-<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}">
-<style>
-  li{
-      border-radius: 8px ;
-      background-color:#FEFEFE;
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Login Page </title>
+  <!-- <link rel="stylesheet" th:href="@{/css/index.css}"> -->
+  <script th:src="@{https://code.jquery.com/jquery-3.6.4.min.js}"></script>
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css}">
+  <style>
+    li {
+      border-radius: 8px;
+      background-color: #FEFEFE;
       margin-right: 10px;
-  }
-  footer {
+    }
+
+    footer {
       background-color: #000;
       color: #fff;
       text-align: center;
       padding: 15px 0;
-  }
-  .navbar-nav .nav-link {
+      margin-top: 128px;
+    }
+
+    .navbar-nav .nav-link {
       position: relative;
       text-decoration: none;
-  }
+    }
 
-  .navbar-nav .nav-item.active .nav-link:after {
-      background-color: #546E7A; /* Set the color of the underline for the active link */
-  }
+    .navbar-nav .nav-item.active .nav-link:after {
+      background-color: #546E7A;
+      /* Set the color of the underline for the active link */
+    }
 
-  .navbar-nav .nav-item.active .nav-link {
-      text-decoration: underline; /* Underline the text for the active link */
-  }
-  form {
-            max-width: 60%;
-            margin: auto;
-            background-color: #D9D9D9;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 50px;
-        }
-</style>
-</head>    
-<body>    
+    .navbar-nav .nav-item.active .nav-link {
+      text-decoration: underline;
+      /* Underline the text for the active link */
+    }
+
+    form {
+      max-width: 60%;
+      margin: auto;
+      background-color: #D9D9D9;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body>
   <nav class="navbar navbar-expand-lg navbar-secondary" style="background-color: #D9D9D9;">
     <div class="container">
-        <a class="navbar-brand" th:href="@{/}">
-            <img src="image/homestay.png" alt="" style="max-width: 100px;height: auto;"/>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">    
-                    <a class="nav-link" th:href="@{/}" >Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/about}">About us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}" >Booking</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/signUp}">Sign Up</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" th:href="@{/}">
+        <img src="image/homestay.png" alt="" style="max-width: 100px;height: auto;" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse " id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/about}">About us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/login}">Booking</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/signUp}">Sign Up</a>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
-<div class="container">
-  <div class="text-center">
+  </nav>
+  <div class="container">
+    <div class="text-center">
       <h1>Log in</h1>
-  </div>
+    </div>
 
-  <form th:action="@{/login}" method="post" modelAttribute="login" class="mt-4" style="background-color: #D9D9D9;">
+    <form th:action="@{/login}" method="post" modelAttribute="login" class="mt-4" style="background-color: #D9D9D9;">
       <div class="mb-3">
-          <label for="email" class="form-label">Email Address:</label>
-          <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+        <label for="email" class="form-label">Email Address:</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" required>
       </div>
 
       <div class="mb-3">
-          <label for="password" class="form-label">Password:</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
       </div>
 
-      <div class="mb-3">
+      <!-- <div class="mb-3">
           <label class="form-check-label mr-2">Role:</label>
           <input type="radio" class="form-check-input" name="role" value="Admin" id="adminRole" > Admin
           <input type="radio" class="form-check-input ml-3" name="role" value="Customer" id="customerRole"> Customer
-      </div>
+      </div> -->
 
       <div class="text-center">
-          <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-primary">Sign in</button>
       </div>
-  </form>
-</div>
-    <footer>
-      <p>&copy; 2021 Homestay Semujuk</p>
-    </footer>
-    <!-- Bootstrap Modal for Login Success -->
+    </form>
+  </div>
+  <footer>
+    <p>&copy; 2021 Homestay Semujuk</p>
+  </footer>
+  <!-- Bootstrap Modal for Login Success -->
   <div th:if="${loginSuccess}" class="modal" tabindex="-1" role="dialog" id="loginSuccessModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -118,48 +128,57 @@
     </div>
   </div>
 
-  <!-- Bootstrap Modal for Invalid Password -->
-  <div th:if="${invalidPassword}" class="modal" tabindex="-1" role="dialog" id="invalidPasswordModal">
+  <div class="modal fade" id="invalidCredentialsModal" tabindex="-1" role="dialog"
+    aria-labelledby="invalidCredentialsModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Invalid Password</h5>
+          <h5 class="modal-title" id="invalidCredentialsModalLabel">Invalid Username or Password</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
         </div>
         <div class="modal-body">
-          <p>Invalid password. Please try again.</p>
+          <p>The username or password you entered is invalid. Please try again.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
       </div>
     </div>
+  </div>
+  <input type="hidden" id="errorFlag" th:value="${error}" />
+  <div th:if="${error}">
+    <script th:inline="javascript">
+      $(document).ready(function () {
+        $('#invalidCredentialsModal').modal('show');
+      });
+    </script>
   </div>
 
-  <!-- Bootstrap Modal for Invalid Email -->
-  <div th:if="${invalidEmail}" class="modal" tabindex="-1" role="dialog" id="invalidEmailModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Invalid Email</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Invalid email. Please try again.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <!-- <div th:if="${error}">
+    <script th:inline="javascript">
+      $(document).ready(function () {
+        $('#invalidCredentialsModal').modal('show');
+      });
+    </script>
+  </div> -->
+
+  <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js}"
+    integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+    crossorigin="anonymous"></script>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
   
-</body>     
-</html>  
+
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+</body>
+
+</html>

@@ -2,18 +2,24 @@ package com.heroku.java.Model;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Booking {
     public int bookingid;
     public int adminId;
-    public Date bookDate;
-    public Date startDate;
-    public Date endDate;
     public int homestayid;
     public int userid;
     public String status;
     public Double totalamount;
     private Homestay homestay;
     private Users user;
+    public int day;
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date bookDate;
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date startDate;
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    public Date endDate;
 
     public Booking(int bookingid, int adminId, Date bookDate, Date startDate, Date endDate, int homestayid, int userid,
             String status, Double totalamount,Homestay homestay,Users user) {
@@ -32,6 +38,12 @@ public class Booking {
 
     public Booking(){
 
+    }
+
+    public Booking(Date startTime, Date endTime,int day) {
+        this.startDate = startTime;
+        this.endDate = endTime;
+        this.day = day;
     }
 
     public int getBookingid() {

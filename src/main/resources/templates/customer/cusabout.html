@@ -63,6 +63,9 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/cusbook}" >Booking</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" th:href="@{/viewbooking(userid=${session.userId})}">View Booking</a>
+              </li>
             </ul>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item dropdown">

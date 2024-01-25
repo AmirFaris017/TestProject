@@ -136,6 +136,7 @@ public class HomestayController {
             final var resultSet = statement.executeQuery();
     
             if(resultSet.next()){
+                // int homestayid2 = resultSet.getInt("homestayid");
                 String homestayname = resultSet.getString("homestayname");
                 String homestaylocation = resultSet.getString("homestaylocation");
                 Double homestayprice = resultSet.getDouble("homestayprice");
