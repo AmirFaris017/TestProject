@@ -56,6 +56,10 @@ public class Admin  {
     return adminid;
   }
 
+  public void setAdminid(int adminid){
+    this.adminid = adminid;
+  }
+
 
   
 
