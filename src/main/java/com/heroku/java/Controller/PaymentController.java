@@ -35,7 +35,7 @@ public class PaymentController{
     }
     
     @PostMapping("/payment")
-    public String payment(HttpSession session,@RequestParam("receipt")MultipartFile receipt,@ModelAttribute("payment")Payment payment){
+    public String addPayment(HttpSession session,@RequestParam("receipt")MultipartFile receipt,@ModelAttribute("payment")Payment payment){
         
         int bookId = (int) session.getAttribute("bookId");
         // session.setAttribute("bookId", bookId);

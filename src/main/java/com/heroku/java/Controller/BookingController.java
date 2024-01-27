@@ -45,7 +45,7 @@ public class BookingController {
 
     @GetMapping("/checkavailability")
     // @ResponseBody
-    public String isAvailable(
+    public String checkAvailable(
             @RequestParam("homestayid") int homestayId,
             @RequestParam("startDate") Date startDate,
             @RequestParam("endDate") Date endDate) {
@@ -331,7 +331,7 @@ public class BookingController {
     }
 
     @GetMapping("/approvebooking")
-    public String updateStatusBook(@RequestParam("bookingid") int bookingId, Model model) throws SQLException {
+    public String approveBooking(@RequestParam("bookingid") int bookingId, Model model) throws SQLException {
         try (Connection con = dataSource.getConnection()) {
             String sql = "UPDATE book SET status =? WHERE bookid =?";
             PreparedStatement statement = con.prepareStatement(sql);
@@ -348,7 +348,7 @@ public class BookingController {
     }
 
     @GetMapping("/rejectbooking")
-    public String rejectbooking(@RequestParam("bookingid") int bookingId, Model model) throws SQLException {
+    public String rejectBooking(@RequestParam("bookingid") int bookingId, Model model) throws SQLException {
         try (Connection con = dataSource.getConnection()) {
             String sql = "UPDATE book SET status =? WHERE bookid =?";
             PreparedStatement statement = con.prepareStatement(sql);
@@ -364,26 +364,26 @@ public class BookingController {
 
     }
 
-    @PostMapping("/updatebooking")
-    public String updateBookingDates(@RequestParam("bookingId") int bookingId,
-            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-        try (Connection connection = dataSource.getConnection()) {
-            // Perform the database update with the new start and end dates
-            String updateSql = "UPDATE book SET startdate = ?, enddate = ? WHERE bookid = ?";
-            try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
-                updateStatement.setDate(1, startDate);
-                updateStatement.setDate(2, endDate);
-                updateStatement.setInt(3, bookingId);
-                updateStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle the error appropriately
-        }
+    // @PostMapping("/updatebooking")
+    // public String updateBookingDates(@RequestParam("bookingId") int bookingId,
+    //         @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+    //         @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+    //     try (Connection connection = dataSource.getConnection()) {
+    //         // Perform the database update with the new start and end dates
+    //         String updateSql = "UPDATE book SET startdate = ?, enddate = ? WHERE bookid = ?";
+    //         try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
+    //             updateStatement.setDate(1, startDate);
+    //             updateStatement.setDate(2, endDate);
+    //             updateStatement.setInt(3, bookingId);
+    //             updateStatement.executeUpdate();
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         // Handle the error appropriately
+    //     }
 
-        return "redirect:/viewbooking"; // Redirect to the booking view page or any other appropriate page
-    }
+    //     return "redirect:/viewbooking"; // Redirect to the booking view page or any other appropriate page
+    // }
 
     @GetMapping("/viewreceipt")
     public String viewReceipt(@RequestParam("bookingid") int bookingId, Model model) {

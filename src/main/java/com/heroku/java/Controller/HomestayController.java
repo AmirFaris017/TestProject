@@ -90,7 +90,7 @@ public class HomestayController {
         }
     } 
     @GetMapping("/cusbook")
-    public String customerhomestay(HttpSession session, Model model) {
+    public String customerBook(HttpSession session, Model model) {
         ArrayList<Homestay> homestays = new ArrayList<>();
         try (Connection con = dataSource.getConnection()) {
             final var statement = con.prepareStatement("SELECT * FROM homestay_ds");
@@ -127,7 +127,7 @@ public class HomestayController {
     } 
 
      @GetMapping("/viewhome")
-    public String viewhome (@RequestParam("homestayid") int homestayid, Model model){
+    public String viewHomestay (@RequestParam("homestayid") int homestayid, Model model){
         try{
             Connection connection = dataSource.getConnection();
             String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
@@ -157,7 +157,7 @@ public class HomestayController {
         }
     }
     @GetMapping("/viewhomestay")
-    public String viewhomestaydetail (@RequestParam("homestayid") int homestayid, Model model){
+    public String viewhomestayDetail (@RequestParam("homestayid") int homestayid, Model model){
         try{
             Connection connection = dataSource.getConnection();
             String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
@@ -187,7 +187,7 @@ public class HomestayController {
     }
 
     @PostMapping("/updatehomestay/{homestayid}")
-    public String updatehomestay(HttpSession session,@ModelAttribute("homestay") Homestay homestay,Model model,@PathVariable("homestayid") int homestayid) {
+    public String updateHomestay(HttpSession session,@ModelAttribute("homestay") Homestay homestay,Model model,@PathVariable("homestayid") int homestayid) {
     String homestayname = homestay.getHomestayname();
     String homestaylocation = homestay.getHomestaylocation();
     Double homestayprice = homestay.getHomestayprice();
@@ -216,7 +216,7 @@ public class HomestayController {
     }
 }
     @GetMapping("/deletehomestay")
-    public String deletehomestay(@RequestParam("homestayid") int homestayid) {
+    public String deleteHomestay(@RequestParam("homestayid") int homestayid) {
     try (Connection connection = dataSource.getConnection()) {
         String sql = "DELETE FROM homestay_ds WHERE homestayid = ?";
         PreparedStatement statement = connection.prepareStatement(sql);

@@ -66,4 +66,40 @@ public class AdminController {
     return "login";
   }
 
+  @PostMapping("/updateprof")
+    public String updateProfile(HttpSession session, @ModelAttribute("admin") Admin admin, Model model) {
+        int adminid = (int) session.getAttribute("adminId");
+        String email = (String) session.getAttribute("email");
+        System.out.println("id customer update : " + adminid);
+
+        String username = admin.getName();
+        String password = admin.getPassword();
+        email = admin.getEmail();
+        String address = admin.getAddress();
+        
+        try {
+            Connection connection = dataSource.getConnection();
+            String sql = "UPDATE admin SET adminname=?, adminpassword=?, adminemail=?, adminaddress=? WHERE adminid=?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setString(3, email);
+            statement.setString(4, address);
+            statement.setInt(5, adminid);
+            statement.executeUpdate();
+            
+
+            System.out.println("debug= " + admin.getName() + " " + admin.getEmail() + " " + admin.getPassword());
+            
+            String returnPage = "admin/admindetails";
+            return returnPage;
+
+        } catch (Throwable t) {
+            System.out.println("message : " + t.getMessage());
+            System.out.println("error");
+            return "redirect:/login";
+        }
+    }
+
 }

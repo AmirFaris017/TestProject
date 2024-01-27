@@ -50,7 +50,7 @@
     <p style="font-weight: bold; font-size: 35px;">Admin Details</p>
 </div>
 <div class="d-flex justify-content-center box " style="background-color:#cfcaca;margin: 0 20%;" >
-    <form th:action="@{/updateprofile}" method="post"  modelAttribute="admin" th:object="${admin}" style="width: 100%;">
+    <form th:action="@{/updateprof}" method="post"  modelAttribute="admin" th:object="${admin}" style="width: 100%;">
         <!-- ... -->
         <legend class="scheduler-border">Personal Information</legend>
         <fieldset class="scheduler-border field">
@@ -62,12 +62,7 @@
             <input class="form-control f" type="password" id="password" name="password" placeholder="Password" th:value="${admin.password}"><br><br>
             <label for="address">Address:</label>
             <input class="form-control f" type="text" id="address" name="address" placeholder="Address" th:value="${admin.address}"><br><br>
-        </fieldset>
-        <div class="d-flex justify-content-evenly">
-            <div class="justify-content-center">
-                <button class="btn btn-primary" type="submit">Update</button>
-            </div>
-        </div>
+        </fieldset> 
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
