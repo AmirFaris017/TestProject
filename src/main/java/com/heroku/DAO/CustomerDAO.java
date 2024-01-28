@@ -18,7 +18,7 @@ public class CustomerDAO {
 
     public void registerUser(Users user) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO users_ds(username, email, password, address) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO customer(username, email, password, address) VALUES (?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getEmail());
@@ -33,7 +33,7 @@ public class CustomerDAO {
     public Users getUserById(int userId) {
         Users user = null;
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT username, password, email, address FROM users_ds WHERE users_ds.userid = ?";
+            String sql = "SELECT username, password, email, address FROM customer WHERE customer.userid = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
@@ -52,7 +52,7 @@ public class CustomerDAO {
 
     public void deleteUserById(int userId) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "DELETE FROM users_ds WHERE userid=?";
+            String sql = "DELETE FROM customer WHERE userid=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             statement.executeUpdate();
@@ -63,7 +63,7 @@ public class CustomerDAO {
 
     public void updateUser(Customer customer) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "UPDATE users_ds SET username=?, password=?, email=?, address=? WHERE userid=?";
+            String sql = "UPDATE customer SET username=?, password=?, email=?, address=? WHERE userid=?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, customer.getUsername());
             statement.setString(2, customer.getPassword());

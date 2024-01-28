@@ -137,28 +137,6 @@
         </div>
     </div>
   </div>
-
-
-
-  <!-- Bootstrap Modal for Invalid Email
-  <div th:if="${invalidEmail}" class="modal" tabindex="-1" role="dialog" id="invalidEmailModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Invalid Email</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Invalid email. Please try again.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
   
   <input type="hidden" id="errorFlag" th:value="${error}" />
     <div th:if="${error}">

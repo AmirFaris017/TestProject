@@ -1,5 +1,6 @@
 package com.heroku.java.Controller;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,49 +20,35 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.heroku.DAO.PaymentDAO;
 import com.heroku.java.Model.Homestay;
 import com.heroku.java.Model.Payment;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class PaymentController{
-    private DataSource dataSource;
-    
+public class PaymentController {
+    private final DataSource dataSource;
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    public PaymentController(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-    
+
     @PostMapping("/payment")
-    public String addPayment(HttpSession session,@RequestParam("receipt")MultipartFile receipt,@ModelAttribute("payment")Payment payment){
-        
+    public String addPayment(HttpSession session, @RequestParam("receipt") MultipartFile receipt,
+            @ModelAttribute("payment") Payment payment) throws IOException {
         int bookId = (int) session.getAttribute("bookId");
-        // session.setAttribute("bookId", bookId);
-        System.out.println("bookId: "+bookId);
-
-        try{
-            Connection connection = dataSource.getConnection();
-            String sql = "INSERT INTO payment(bookid,receipt) VALUES(?,?)";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, bookId);
-            statement.setBytes(2, receipt.getBytes());
-            statement.executeUpdate();
-            connection.close();
-
-            return "redirect:/cusbook";
-        } catch (SQLException sqe) {
-            sqe.printStackTrace();
-            return "redirect:/";
-        } catch (Exception e) {
+        PaymentDAO paymentDAO = new PaymentDAO(dataSource);
+        try {
+            paymentDAO.addPayment(bookId, receipt);
+            return "redirect:/viewbooking";
+        } catch (SQLException e) {
             e.printStackTrace();
             return "redirect:/";
         }
     }
-
-    
-    }
+}
 
 
 

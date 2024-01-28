@@ -42,7 +42,7 @@ public class LoginController {
       final var statement = connection.createStatement();
       System.out.println("Connected");
   
-      final var userQuery = "SELECT * FROM users_ds WHERE email = ?";
+      final var userQuery = "SELECT * FROM customer WHERE email = ?";
       final var adminQuery = "SELECT * FROM admin WHERE adminemail = ?";
       
       PreparedStatement userStatement = connection.prepareStatement(userQuery);
@@ -61,17 +61,20 @@ public class LoginController {
         int userId = userResultSet.getInt("userid");
   
         if (pwd.matches(user.getPassword())) {
+          // Passwords match
           session.setAttribute("username", user.getUsername());
           session.setAttribute("userId", userId);
           session.setMaxInactiveInterval(1440 * 60);
           System.out.println("User ID: " + session.getAttribute("userId"));
           model.addAttribute("loginSuccess", true);
           returnPage = "customer/cusdashboard";
-        } else {
+      } else {
+          // Passwords don't match
           System.out.println("invalid password");
           model.addAttribute("error", true);//tukar
           returnPage = "index";
-        }
+      }
+      
       } else if (adminResultSet.next()) {
         String pwd = adminResultSet.getString("adminpassword");
         int adminId = adminResultSet.getInt("adminId");

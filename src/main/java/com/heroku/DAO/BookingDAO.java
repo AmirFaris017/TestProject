@@ -39,7 +39,7 @@ public class BookingDAO {
             // java.sql.Date eD = Date.valueOf(endDate);
             // Query to check if there are any bookings for the given homestay and date
             // range
-            String checkAvailabilitySql = "SELECT COUNT(*) FROM book WHERE homestayid = ? " +
+            String checkAvailabilitySql = "SELECT COUNT(*) FROM booking WHERE homestayid = ? " +
                     "AND ((startdate <= ? AND enddate >= ?) OR (startdate <= ? AND enddate >= ?) OR (startdate >= ? AND enddate <= ?))";
 
             try (PreparedStatement statement = connection.prepareStatement(checkAvailabilitySql)) {
@@ -80,7 +80,7 @@ public class BookingDAO {
     public String getBooking(int homestayid, Model model, Date startDate, Date endDate) {
         try {
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT homestayname, homestaylocation, homestayprice, homestaydetails, homestaypic FROM homestay_ds WHERE homestayid = ?";
+            String sql = "SELECT homestayname, homestaylocation, homestayprice, homestaydetails, homestaypic FROM homestay WHERE homestayid = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, homestayid);
             ResultSet resultSet = statement.executeQuery();
@@ -129,7 +129,7 @@ public class BookingDAO {
             Connection connection = dataSource.getConnection();
 
             // Fetch homestay price using homestay ID
-            String homestayPriceQuery = "SELECT homestayprice FROM homestay_ds WHERE homestayid = ?";
+            String homestayPriceQuery = "SELECT homestayprice FROM homestay WHERE homestayid = ?";
             PreparedStatement priceStatement = connection.prepareStatement(homestayPriceQuery);
             priceStatement.setInt(1, homestayid);
             ResultSet priceResult = priceStatement.executeQuery();
@@ -146,7 +146,7 @@ public class BookingDAO {
             int daysDiff = (int) (timeDiff / (1000 * 3600 * 24));
             double totalPayment = daysDiff * homestayPrice;
 
-            String sql = "INSERT INTO book(adminid, bookdate, startdate, enddate, homestayid, userid, status, totalamount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO booking(adminid, bookdate, startdate, enddate, homestayid, userid, status, totalamount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             LocalDate currentDate = LocalDate.now();
             statement.setInt(1, 1);
@@ -189,8 +189,8 @@ public class BookingDAO {
             String sql = "SELECT b.bookid, b.adminid, b.bookdate, b.startdate, b.enddate, b.homestayid, b.userid, b.status, b.totalamount, "
                     +
                     "hs.homestayname, hs.homestaylocation, hs.homestaypic " +
-                    "FROM book b " +
-                    "JOIN homestay_ds hs ON b.homestayid = hs.homestayid " +
+                    "FROM booking b " +
+                    "JOIN homestay hs ON b.homestayid = hs.homestayid " +
                     "WHERE b.userid = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setInt(1, userId);
@@ -240,8 +240,8 @@ public class BookingDAO {
                     +
                     "hs.homestayname, hs.homestaylocation, hs.homestaypic, " +
                     "u.username, u.phoneNo " +
-                    "FROM book b " +
-                    "JOIN homestay_ds hs ON b.homestayid = hs.homestayid " +
+                    "FROM booking b " +
+                    "JOIN homestay hs ON b.homestayid = hs.homestayid " +
                     "JOIN users_ds u ON b.userid = u.userid";
 
             PreparedStatement statement = con.prepareStatement(sql);
@@ -293,7 +293,7 @@ public class BookingDAO {
 
     public String approveBooking(int bookingId, Model model) {
         try (Connection con = dataSource.getConnection()) {
-            String sql = "UPDATE book SET status =? WHERE bookid =?";
+            String sql = "UPDATE booking SET status =? WHERE bookid =?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, "Approve");
             statement.setInt(2, bookingId);
@@ -308,7 +308,7 @@ public class BookingDAO {
 
     public String rejectBooking(int bookingId, Model model) {
         try (Connection con = dataSource.getConnection()) {
-            String sql = "UPDATE book SET status =? WHERE bookid =?";
+            String sql = "UPDATE booking SET status =? WHERE bookid =?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, "Rejected");
             statement.setInt(2, bookingId);

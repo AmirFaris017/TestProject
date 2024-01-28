@@ -25,7 +25,7 @@ public class HomestayDAO {
 
     public String addHomestay(HttpSession session, MultipartFile homestayPic, Homestay homestay) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "INSERT INTO homestay_ds(homestayname, homestaylocation, homestayprice, homestaydetails, homestaypic) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO homestay(homestayname, homestaylocation, homestayprice, homestaydetails, homestaypic) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, homestay.getHomestayname());
             statement.setString(2, homestay.getHomestaylocation());
@@ -46,7 +46,7 @@ public class HomestayDAO {
     public String viewHomestay(HttpSession session, Model model) {
         ArrayList<Homestay> homestays = new ArrayList<>();
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM homestay_ds";
+            String sql = "SELECT * FROM homestay";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -76,7 +76,7 @@ public class HomestayDAO {
     public String customerBook(HttpSession session, Model model) {
         ArrayList<Homestay> homestays = new ArrayList<>();
         try (Connection con = dataSource.getConnection()) {
-            final var statement = con.prepareStatement("SELECT * FROM homestay_ds");
+            final var statement = con.prepareStatement("SELECT * FROM homestay");
             final var rs = statement.executeQuery();
             while (rs.next()) {
                 int homestayid = rs.getInt("homestayid");
@@ -112,7 +112,7 @@ public class HomestayDAO {
     public String viewHomeStay(int homestayid, Model model) {
         try{
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
+            String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay WHERE homestayid = ?";
             final var statement = connection.prepareStatement(sql);
             statement.setInt(1, homestayid);
             final var resultSet = statement.executeQuery();
@@ -142,7 +142,7 @@ public class HomestayDAO {
     public String viewHomestayDetail(int homestayid, Model model) {
         try{
             Connection connection = dataSource.getConnection();
-            String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay_ds WHERE homestayid = ?";
+            String sql = "SELECT homestayname,homestaylocation,homestayprice,homestaydetails,homestaypic FROM homestay WHERE homestayid = ?";
             final var statement = connection.prepareStatement(sql);
             statement.setInt(1, homestayid);
             final var resultSet = statement.executeQuery();
@@ -176,7 +176,7 @@ public class HomestayDAO {
     
     try {
         Connection con = dataSource.getConnection();
-        String sql = "UPDATE homestay_ds SET homestayname=?,homestaylocation=?,homestayprice=?,homestaydetails=? WHERE homestayid=?";
+        String sql = "UPDATE homestay SET homestayname=?,homestaylocation=?,homestayprice=?,homestaydetails=? WHERE homestayid=?";
         final var statement = con.prepareStatement(sql);
 
         statement.setString(1, homestayname);
@@ -199,7 +199,7 @@ public class HomestayDAO {
 
     public String deleteHomestay(int homestayid) {
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "DELETE FROM homestay_ds WHERE homestayid = ?";
+            String sql = "DELETE FROM homestay WHERE homestayid = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, homestayid);
             statement.executeUpdate();
